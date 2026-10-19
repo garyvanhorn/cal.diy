@@ -17,6 +17,7 @@ import { ZGetHostsForAvailabilityInputSchema } from "./getHostsForAvailability.s
 import { ZGetHostsWithLocationOptionsInputSchema } from "./getHostsWithLocationOptions.schema";
 import { ZMassApplyHostLocationInputSchema } from "./massApplyHostLocation.schema";
 import { get } from "./procedures/get";
+import { ZGetRemindersInputSchema, ZUpdateRemindersInputSchema } from "./reminders.schema";
 import { ZSearchTeamMembersInputSchema } from "./searchTeamMembers.schema";
 import { createEventPbacProcedure } from "./util";
 
@@ -110,6 +111,20 @@ export const eventTypesRouter = router({
         ctx,
         input,
       });
+    }),
+
+  getReminders: createEventPbacProcedure("eventType.update", [MembershipRole.ADMIN, MembershipRole.OWNER])
+    .input(ZGetRemindersInputSchema)
+    .query(async ({ input }) => {
+      const { getRemindersHandler } = await import("./reminders.handler");
+      return getRemindersHandler({ input });
+    }),
+
+  updateReminders: createEventPbacProcedure("eventType.update", [MembershipRole.ADMIN, MembershipRole.OWNER])
+    .input(ZUpdateRemindersInputSchema)
+    .mutation(async ({ input }) => {
+      const { updateRemindersHandler } = await import("./reminders.handler");
+      return updateRemindersHandler({ input });
     }),
 
   bulkEventFetch: authedProcedure.query(async ({ ctx }) => {

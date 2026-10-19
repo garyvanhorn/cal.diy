@@ -1,7 +1,5 @@
-import { describe, expect, it, vi } from "vitest";
-
 import type { PrismaClient } from "@calcom/prisma";
-
+import { describe, expect, it, vi } from "vitest";
 import { EventTypeReminderRepository } from "./EventTypeReminderRepository";
 
 describe("EventTypeReminderRepository", () => {
@@ -16,5 +14,29 @@ describe("EventTypeReminderRepository", () => {
       select: { channel: true, minutesBefore: true },
       orderBy: { minutesBefore: "desc" },
     });
+  });
+
+  it("replaces one channel's offsets in a single transaction", async () => {
+    const prismaClient = {
+      $transaction: vi.fn().mockResolvedValue([]),
+      eventTypeReminder: {
+        deleteMany: vi.fn().mockReturnValue("delete-op"),
+        createMany: vi.fn().mockReturnValue("create-op"),
+      },
+    };
+    const repository = new EventTypeReminderRepository(prismaClient as unknown as PrismaClient);
+
+    await repository.replaceForChannel({ eventTypeId: 7, channel: "EMAIL", minutesBefore: [1440, 60] });
+
+    expect(prismaClient.eventTypeReminder.deleteMany).toHaveBeenCalledWith({
+      where: { eventTypeId: 7, channel: "EMAIL" },
+    });
+    expect(prismaClient.eventTypeReminder.createMany).toHaveBeenCalledWith({
+      data: [
+        { eventTypeId: 7, channel: "EMAIL", minutesBefore: 1440 },
+        { eventTypeId: 7, channel: "EMAIL", minutesBefore: 60 },
+      ],
+    });
+    expect(prismaClient.$transaction).toHaveBeenCalledWith(["delete-op", "create-op"]);
   });
 });

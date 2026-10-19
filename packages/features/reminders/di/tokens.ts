@@ -15,4 +15,6 @@ export const REMINDERS_DI_TOKENS = {
   REMINDER_DELIVERY_SERVICE_MODULE: Symbol("ReminderDeliveryServiceModule"),
   ATTENDANCE_CONFIRMATION_SERVICE: Symbol("AttendanceConfirmationService"),
   ATTENDANCE_CONFIRMATION_SERVICE_MODULE: Symbol("AttendanceConfirmationServiceModule"),
+  EVENT_TYPE_REMINDER_SERVICE: Symbol("EventTypeReminderService"),
+  EVENT_TYPE_REMINDER_SERVICE_MODULE: Symbol("EventTypeReminderServiceModule"),
 };
