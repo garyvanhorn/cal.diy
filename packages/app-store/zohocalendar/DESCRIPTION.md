@@ -6,4 +6,4 @@ items:
   - ZCal4.jpg
 ---
 
-Zoho Calendar is an online business calendar that makes scheduling easy for you. Use this app to sync your Cal bookings with your Zoho Calendar.
+Zoho Calendar is an online business calendar that makes scheduling easy for you. Use this app to sync your bookings with your Zoho Calendar.

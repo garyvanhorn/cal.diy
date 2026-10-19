@@ -17,7 +17,7 @@
       "linkType": "static",
       "type": "integrations:whereby_video",
       "label": "Whereby Video",
-      "organizerInputPlaceholder": "https://www.whereby.com/cal",
+      "organizerInputPlaceholder": "https://www.whereby.com/your-room",
       "urlRegExp": "^(?:https?://)?(?:(?!.*-\\.)(?:\\w+(-\\w+)*\\.))*whereby\\.com(/[\\w\\-._~:?#\\[\\]@!$&'()*+,;%=]+)*$"
     }
   },

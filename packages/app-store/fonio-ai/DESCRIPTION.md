@@ -27,7 +27,7 @@ Lass unsere KI rund um die Uhr die Anliegen deiner Kunden betreuen. Über unsere
 Biete schnellen Service mit automatisierter 24/7-Anfragenbearbeitung.
 
 ## Terminplanung
-Unsere KI kann während dem Gespräch Termine vereinbaren – kompatibel mit allen Kalendern, die auch cal.com unterstützen.
+Unsere KI kann während dem Gespräch Termine vereinbaren – kompatibel mit allen gängigen Kalendern.
 
 
 {DESCRIPTION}
