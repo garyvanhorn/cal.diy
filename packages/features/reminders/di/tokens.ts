@@ -5,4 +5,12 @@ export const REMINDERS_DI_TOKENS = {
   REMINDER_TASK_REPOSITORY_MODULE: Symbol("ReminderTaskRepositoryModule"),
   REMINDER_SCHEDULER_SERVICE: Symbol("ReminderSchedulerService"),
   REMINDER_SCHEDULER_SERVICE_MODULE: Symbol("ReminderSchedulerServiceModule"),
+  BOOKING_CALENDAR_EVENT_LOADER: Symbol("BookingCalendarEventLoader"),
+  BOOKING_CALENDAR_EVENT_LOADER_MODULE: Symbol("BookingCalendarEventLoaderModule"),
+  EMAIL_REMINDER_SENDER: Symbol("EmailReminderSender"),
+  EMAIL_REMINDER_SENDER_MODULE: Symbol("EmailReminderSenderModule"),
+  REMINDER_SENDER_FACTORY: Symbol("ReminderSenderFactory"),
+  REMINDER_SENDER_FACTORY_MODULE: Symbol("ReminderSenderFactoryModule"),
+  REMINDER_DELIVERY_SERVICE: Symbol("ReminderDeliveryService"),
+  REMINDER_DELIVERY_SERVICE_MODULE: Symbol("ReminderDeliveryServiceModule"),
 };

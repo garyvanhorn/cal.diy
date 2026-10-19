@@ -1,8 +1,9 @@
+import type { TaskTypes } from "@calcom/features/tasker/tasker";
 import type { PrismaClient } from "@calcom/prisma";
 import type { ScheduledReminderTask } from "../lib/types";
 
 const MAX_ATTEMPTS = 3;
-export const BOOKING_REMINDER_TASK_TYPE = "sendBookingReminder";
+export const BOOKING_REMINDER_TASK_TYPE = "sendBookingReminder" satisfies TaskTypes;
 
 export class ReminderTaskRepository {
   constructor(private readonly prismaClient: PrismaClient) {}
