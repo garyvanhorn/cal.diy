@@ -28,7 +28,7 @@ import { isWithinMinimumRescheduleNotice as isWithinMinimumRescheduleNoticeUtil 
 import type { nameObjectSchema } from "@calcom/features/eventtypes/lib/eventNaming";
 import { getEventName } from "@calcom/features/eventtypes/lib/eventNaming";
 import { shouldShowFieldInCustomResponses } from "@calcom/lib/bookings/SystemField";
-import { APP_NAME } from "@calcom/lib/constants";
+import { APP_NAME, WEBAPP_URL } from "@calcom/lib/constants";
 import { formatToLocalizedDate, formatToLocalizedTime, formatToLocalizedTimezone } from "@calcom/lib/dayjs";
 import useGetBrandingColours from "@calcom/lib/getBrandColours";
 import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
@@ -54,13 +54,7 @@ import { Button } from "@calcom/ui/components/button";
 import { EmptyScreen } from "@calcom/ui/components/empty-screen";
 import { EmailInput, TextArea } from "@calcom/ui/components/form";
 import { Icon } from "@calcom/ui/components/icon";
-import {
-  CalendarIcon,
-  CheckIcon,
-  ChevronLeftIcon,
-  ExternalLinkIcon,
-  XIcon,
-} from "@coss/ui/icons";
+import { CalendarIcon, CheckIcon, ChevronLeftIcon, ExternalLinkIcon, XIcon } from "@coss/ui/icons";
 import { showToast } from "@calcom/ui/components/toast";
 import { useCalcomTheme } from "@calcom/ui/styles";
 import CancelBooking from "@calcom/web/components/booking/CancelBooking";
@@ -69,6 +63,9 @@ import { timeZone } from "@calcom/web/lib/clock";
 
 import { usePaymentStatus } from "../hooks/usePaymentStatus";
 import type { PageProps } from "./bookings-single-view.getServerSideProps";
+
+// Instances that provision accounts themselves disable signup; the CTA would only lead to an error page.
+const isSignupEnabled = process.env.NEXT_PUBLIC_DISABLE_SIGNUP !== "true";
 
 const stringToBoolean = z
   .string()
@@ -780,10 +777,7 @@ export default function Success(props: PageProps) {
                             <>
                               <div className="mt-9 font-medium">{t("assignment_reason")}</div>
                               <div className="col-span-2 mb-2 mt-9">
-                                <Badge
-                                  variant="gray"
-                                  className="mb-2 cursor-pointer hover:opacity-80"
->
+                                <Badge variant="gray" className="mb-2 cursor-pointer hover:opacity-80">
                                   {t(
                                     assignmentReasonBadgeTitleMap(
                                       bookingInfo.assignmentReason[0].reasonEnum as AssignmentReasonEnum
@@ -1034,11 +1028,11 @@ export default function Success(props: PageProps) {
                       </>
                     )}
 
-                    {session === null && !(userIsOwner || props.hideBranding) && (
+                    {session === null && isSignupEnabled && !(userIsOwner || props.hideBranding) && (
                       <>
                         <hr className="border-subtle mt-8" />
                         <div className="text-default pt-8 text-center text-xs">
-                          <a href="https://cal.com/signup">
+                          <a href={`${WEBAPP_URL}/signup`}>
                             {t("create_booking_link_with_calcom", { appName: APP_NAME })}
                           </a>
 
@@ -1048,7 +1042,9 @@ export default function Success(props: PageProps) {
                               const target = e.target as typeof e.target & {
                                 email: { value: string };
                               };
-                              router.push(`https://cal.com/signup?email=${target.email.value}`);
+                              router.push(
+                                `${WEBAPP_URL}/signup?email=${encodeURIComponent(target.email.value)}`
+                              );
                             }}
                             className="mt-4 flex">
                             <EmailInput
@@ -1056,7 +1052,7 @@ export default function Success(props: PageProps) {
                               id="email"
                               defaultValue={email}
                               className="mr- focus:border-brand-default border-default text-default mt-0 block w-full rounded-none rounded-l-md shadow-sm focus:ring-black sm:text-sm"
-                              placeholder="rick.astley@cal.com"
+                              placeholder={t("email_placeholder")}
                             />
                             <Button
                               type="submit"

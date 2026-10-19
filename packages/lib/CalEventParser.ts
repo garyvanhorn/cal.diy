@@ -13,7 +13,7 @@ import type {
   VideoCallData,
 } from "@calcom/types/Calendar";
 
-import { WEBAPP_URL } from "./constants";
+import { APP_NAME, WEBAPP_URL } from "./constants";
 import isSmsCalEmail from "./isSmsCalEmail";
 import {
   buildPlatformCancelLink,
@@ -201,7 +201,7 @@ export const getProviderName = (location?: string | null): string => {
   if (location && location.includes("integrations:")) {
     let locationName = location.split(":")[1];
     if (locationName === "daily") {
-      locationName = "Cal Video";
+      locationName = `${APP_NAME} Video`;
     }
     return locationName[0].toUpperCase() + locationName.slice(1);
   }
