@@ -34,7 +34,10 @@ export const WEBAPP_URL_FOR_OAUTH = IS_PRODUCTION || IS_DEV ? WEBAPP_URL : "http
 
 /** @deprecated use `WEBAPP_URL` */
 export const BASE_URL = WEBAPP_URL;
-export const WEBSITE_URL = ensureProtocol(process.env.NEXT_PUBLIC_WEBSITE_URL) || "https://cronslot.com";
+// In this codebase WEBSITE_URL is the public booking site (next.config.ts defaults it to the web app URL),
+// so the marketing/sales site gets its own constant.
+export const WEBSITE_URL = ensureProtocol(process.env.NEXT_PUBLIC_WEBSITE_URL) || WEBAPP_URL;
+export const MARKETING_URL = ensureProtocol(process.env.NEXT_PUBLIC_MARKETING_URL) || "https://cronslot.com";
 export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "CronSlot";
 export const SUPPORT_MAIL_ADDRESS = process.env.NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS || "support@cronslot.com";
 export const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || "GVX Digital";
