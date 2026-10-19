@@ -1,16 +1,9 @@
 "use client";
 
-import {
-  getWebhookVersionDocsUrl,
-  getWebhookVersionLabel,
-  WEBHOOK_VERSION_OPTIONS,
-} from "@calcom/features/webhooks/lib/constants";
+import { getWebhookVersionLabel, WEBHOOK_VERSION_OPTIONS } from "@calcom/features/webhooks/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Button } from "@coss/ui/components/button";
 import { Select, SelectItem, SelectPopup, SelectTrigger, SelectValue } from "@coss/ui/components/select";
 import { Tooltip, TooltipPopup, TooltipProvider, TooltipTrigger } from "@coss/ui/components/tooltip";
-import { ExternalLinkIcon } from "lucide-react";
-import Link from "next/link";
 import type { UseFormReturn } from "react-hook-form";
 import type { WebhookFormValues } from "./WebhookForm";
 
@@ -56,30 +49,6 @@ export function WebhookVersionCTA({ formMethods }: { formMethods: UseFormReturn<
             }
           />
           <TooltipPopup>{t("webhook_version")}</TooltipPopup>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                render={
-                  <Link
-                    className="flex text-muted-foreground hover:text-foreground"
-                    href={getWebhookVersionDocsUrl(version)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />
-                }>
-                <ExternalLinkIcon />
-              </Button>
-            }
-          />
-          <TooltipPopup>
-            {t("webhook_version_docs", {
-              version: getWebhookVersionLabel(version),
-            })}
-          </TooltipPopup>
         </Tooltip>
       </TooltipProvider>
     </div>

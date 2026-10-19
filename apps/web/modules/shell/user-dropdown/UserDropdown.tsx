@@ -1,4 +1,3 @@
-import { ROADMAP } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import useMeQuery from "@calcom/trpc/react/hooks/useMeQuery";
 import classNames from "@calcom/ui/classNames";
@@ -18,7 +17,6 @@ import {
   ChevronUpIcon,
   CircleHelpIcon,
   LogOutIcon,
-  MapIcon,
   MoonIcon,
   SettingsIcon,
   UserIcon,
@@ -176,11 +174,6 @@ export function UserDropdown({ small }: UserDropdownProps) {
             </MenuItem>
             <MenuSeparator />
           </>
-
-          <MenuItem render={<a href={ROADMAP} target="_blank" rel="noreferrer" />}>
-            <MapIcon />
-            {t("visit_roadmap")}
-          </MenuItem>
           <MenuItem onClick={handleHelpClick}>
             <CircleHelpIcon />
             {t("help")}
