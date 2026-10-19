@@ -1,13 +1,14 @@
 "use client";
 
 import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
-import { HOSTED_CAL_FEATURES, WEBAPP_URL, WEBSITE_URL } from "@calcom/lib/constants";
+import { APP_NAME, HOSTED_CAL_FEATURES, WEBAPP_URL, WEBSITE_URL } from "@calcom/lib/constants";
 import { emailRegex } from "@calcom/lib/emailSchema";
 import { getSafeRedirectUrl } from "@calcom/lib/getSafeRedirectUrl";
 import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { Alert } from "@calcom/ui/components/alert";
 import { Icon } from "@calcom/ui/components/icon";
+import { Logo } from "@calcom/ui/components/logo";
 import { LastUsed, useLastUsed } from "@calcom/web/modules/auth/hooks/useLastUsed";
 import AddToHomescreen from "@components/AddToHomescreen";
 import BackupCode from "@components/auth/BackupCode";
@@ -36,13 +37,9 @@ interface LoginValues {
   csrfToken: string;
 }
 
-const MicrosoftIcon = () => (
-  <img className="size-4" src="/microsoft-logo.svg" alt="" />
-);
+const MicrosoftIcon = () => <img className="size-4" src="/microsoft-logo.svg" alt="" />;
 
-const GoogleIcon = () => (
-  <img className="size-4" src="/google-icon-colored.svg" alt="" />
-);
+const GoogleIcon = () => <img className="size-4" src="/google-icon-colored.svg" alt="" />;
 
 function BackgroundGrid() {
   const rows = 9;
@@ -182,8 +179,8 @@ export default function Login({
         {/* Main Card */}
         <div className="w-full rounded-xl border border-subtle bg-default p-10 shadow-sm">
           {/* Logo */}
-          <div className="mb-2 text-center">
-            <h1 className="font-cal text-xl font-bold text-emphasis">Cal.diy</h1>
+          <div className="mb-4 flex justify-center">
+            <Logo className="[&_img]:h-8" />
           </div>
 
           {/* Heading */}
@@ -372,12 +369,18 @@ export default function Login({
               <Link
                 href={
                   callbackUrl
-                    ? `${WEBSITE_URL}/signup?redirect=${encodeURIComponent(callbackUrl)}`
-                    : `${WEBSITE_URL}/signup`
+                    ? `${WEBAPP_URL}/signup?redirect=${encodeURIComponent(callbackUrl)}`
+                    : `${WEBAPP_URL}/signup`
                 }
                 className="text-sm font-medium text-emphasis hover:underline">
                 {t("create_account")}
               </Link>
+            )}
+            {/* Accounts are provisioned by GVX, so prospects who land here go to the sales site instead of signup. */}
+            {!showSignupLink && (
+              <a href={WEBSITE_URL} className="text-sm font-medium text-emphasis hover:underline">
+                {t("get_app_for_your_business", { appName: APP_NAME })}
+              </a>
             )}
           </div>
         )}

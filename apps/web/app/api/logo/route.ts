@@ -7,6 +7,7 @@ import {
   IS_SELF_HOSTED,
   LOGO,
   LOGO_ICON,
+  LOGO_ON_DARK_BACKGROUND,
   MSTILE_ICON,
   WEBAPP_URL,
 } from "@calcom/lib/constants";
@@ -42,6 +43,7 @@ const SYSTEM_SUBDOMAINS = ["console", "app", "www"];
 
 type LogoType =
   | "logo"
+  | "logo-dark"
   | "icon"
   | "favicon-16"
   | "favicon-32"
@@ -60,6 +62,10 @@ type LogoTypeDefinition = {
 const logoDefinitions: Record<LogoType, LogoTypeDefinition> = {
   logo: {
     fallback: `${WEBAPP_URL}${LOGO}`,
+    source: "appLogo",
+  },
+  "logo-dark": {
+    fallback: `${WEBAPP_URL}${LOGO_ON_DARK_BACKGROUND}`,
     source: "appLogo",
   },
   icon: {
