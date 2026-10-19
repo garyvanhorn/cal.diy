@@ -39,6 +39,7 @@ import { showToast } from "@calcom/ui/components/toast";
 import { Tooltip } from "@calcom/ui/components/tooltip";
 
 import assignmentReasonBadgeTitleMap from "@lib/booking/assignmentReasonBadgeTitleMap";
+import { AttendanceConfirmedBadge } from "./AttendanceConfirmedBadge";
 
 import { WrongAssignmentDialog } from "../dialog/WrongAssignmentDialog";
 import { buildBookingLink } from "../../modules/bookings/lib/buildBookingLink";
@@ -367,6 +368,9 @@ function BookingListItem(booking: BookingItemProps) {
                   {t("unconfirmed")}
                 </Badge>
               )}
+              {isConfirmed && (
+                <AttendanceConfirmedBadge attendees={booking.attendees} className="ltr:mr-2 rtl:ml-2 sm:hidden" />
+              )}
               {booking.eventType?.team && (
                 <Badge className="ltr:mr-2 rtl:ml-2 sm:hidden" variant="gray">
                   {booking.eventType.team.name}
@@ -570,6 +574,9 @@ const BookingItemBadges = ({
         <Badge className="ltr:mr-2 rtl:ml-2" variant="orange">
           {t("unconfirmed")}
         </Badge>
+      )}
+      {booking.status === BookingStatus.ACCEPTED && (
+        <AttendanceConfirmedBadge attendees={booking.attendees} className="ltr:mr-2 rtl:ml-2" />
       )}
       {isRescheduled && (
         <Tooltip content={`${t("rescheduled_by")} ${booking.rescheduler}`}>

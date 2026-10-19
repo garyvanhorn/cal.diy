@@ -52,6 +52,30 @@ export class AttendeeRepository implements IAttendeeRepository {
     });
   }
 
+  async findByIdIncludeBooking(id: number) {
+    return this.prismaClient.attendee.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        timeZone: true,
+        locale: true,
+        confirmedAt: true,
+        booking: {
+          select: { uid: true, title: true, startTime: true, endTime: true, status: true },
+        },
+      },
+    });
+  }
+
+  async updateConfirmedAtIfUnset({ id, confirmedAt }: { id: number; confirmedAt: Date }): Promise<number> {
+    const result = await this.prismaClient.attendee.updateMany({
+      where: { id, confirmedAt: null },
+      data: { confirmedAt },
+    });
+    return result.count;
+  }
+
   async findByIds({ ids }: { ids: number[] }): Promise<{ id: number; name: string; email: string }[]> {
     return this.prismaClient.attendee.findMany({
       where: { id: { in: ids } },

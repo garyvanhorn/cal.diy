@@ -4776,5 +4776,14 @@
   "attendee_reminder_subtitle": "Tap the button below to confirm you'll be there.",
   "attendee_reminder_confirmed_subtitle": "Thanks for confirming. See you there.",
   "confirm_attendance": "Confirm I'll be there",
+  "confirm_attendance_title": "Will you be there?",
+  "attendance_confirmed_title": "You're confirmed",
+  "attendance_confirmed_description": "Thanks for letting us know. See you there.",
+  "attendance_unavailable_title": "This appointment can't be confirmed",
+  "attendance_unavailable_description": "It may have been canceled, moved, or already taken place. Check your latest email for details.",
+  "attendance_link_invalid_title": "This link isn't valid",
+  "attendance_link_invalid_description": "Open the confirm button from your most recent reminder email.",
+  "attendee_confirmed": "Attendee confirmed",
+  "attendees_confirmed_count": "{{confirmed}}/{{total}} confirmed",
   "ADD_NEW_STRINGS_ABOVE_THIS_LINE_TO_PREVENT_MERGE_CONFLICTS": "↑↑↑↑↑↑↑↑↑↑↑↑↑ Add your new strings above here ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑"
 }
