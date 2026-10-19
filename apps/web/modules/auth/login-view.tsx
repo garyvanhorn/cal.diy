@@ -1,7 +1,7 @@
 "use client";
 
 import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
-import { HOSTED_CAL_FEATURES, WEBAPP_URL, WEBSITE_URL } from "@calcom/lib/constants";
+import { APP_NAME, HOSTED_CAL_FEATURES, WEBAPP_URL, WEBSITE_URL } from "@calcom/lib/constants";
 import { emailRegex } from "@calcom/lib/emailSchema";
 import { getSafeRedirectUrl } from "@calcom/lib/getSafeRedirectUrl";
 import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
@@ -369,12 +369,18 @@ export default function Login({
               <Link
                 href={
                   callbackUrl
-                    ? `${WEBSITE_URL}/signup?redirect=${encodeURIComponent(callbackUrl)}`
-                    : `${WEBSITE_URL}/signup`
+                    ? `${WEBAPP_URL}/signup?redirect=${encodeURIComponent(callbackUrl)}`
+                    : `${WEBAPP_URL}/signup`
                 }
                 className="text-sm font-medium text-emphasis hover:underline">
                 {t("create_account")}
               </Link>
+            )}
+            {/* Accounts are provisioned by GVX, so prospects who land here go to the sales site instead of signup. */}
+            {!showSignupLink && (
+              <a href={WEBSITE_URL} className="text-sm font-medium text-emphasis hover:underline">
+                {t("get_app_for_your_business", { appName: APP_NAME })}
+              </a>
             )}
           </div>
         )}

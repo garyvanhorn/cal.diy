@@ -361,6 +361,7 @@
   "secret_meeting": "Secret meeting",
   "login_instead": "Login instead",
   "create_account": "Create account",
+  "get_app_for_your_business": "Get {{appName}} for your business",
   "get_started": "Get started",
   "confirm_password": "Confirm password",
   "reset_your_password": "Set your new password with the instructions sent to your email address.",
