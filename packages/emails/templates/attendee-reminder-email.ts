@@ -18,9 +18,10 @@ export default class AttendeeReminderEmail extends AttendeeScheduledEmail {
       to: `${this.attendee.name} <${this.attendee.email}>`,
       from: `${this.calEvent.organizer.name} <${this.getMailerOptions().from}>`,
       ...getReplyToHeader(this.calEvent),
-      subject: this.t("reminder_email", {
-        eventType: this.calEvent.title,
-        name: this.calEvent.team?.name || this.calEvent.organizer.name,
+      // The booking title usually already names both parties, so the generic
+      // "{{eventType}} with {{name}}" reminder subject would repeat the organizer.
+      subject: this.t("attendee_reminder_subject", {
+        title: this.calEvent.title,
         date: this.getFormattedDate(),
         interpolation: { escapeValue: false },
       }),

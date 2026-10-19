@@ -25,7 +25,7 @@ export const AttendeeReminderEmail = (props: AttendeeReminderEmailProps) => {
     <AttendeeScheduledEmail
       title="attendee_reminder_title"
       headerType="calendarCircle"
-      subject="reminder_email"
+      subject={t("attendee_reminder_title")}
       subtitle={
         <>{t(props.confirmUrl ? "attendee_reminder_subtitle" : "attendee_reminder_confirmed_subtitle")}</>
       }
