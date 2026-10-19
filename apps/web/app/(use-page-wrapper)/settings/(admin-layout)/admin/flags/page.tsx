@@ -1,12 +1,12 @@
-import { _generateMetadata, getTranslate } from "app/_utils";
-
-import { FlagListingView } from "@calcom/web/modules/feature-flags/views/flag-listing-view";
 import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
+import { APP_NAME } from "@calcom/lib/constants";
+import { FlagListingView } from "@calcom/web/modules/feature-flags/views/flag-listing-view";
+import { _generateMetadata, getTranslate } from "app/_utils";
 
 export const generateMetadata = async () =>
   await _generateMetadata(
     (t) => t("feature_flags"),
-    (t) => t("admin_flags_description"),
+    (t) => t("admin_flags_description", { appName: APP_NAME }),
     undefined,
     undefined,
     "/settings/admin/flags"
@@ -15,7 +15,9 @@ export const generateMetadata = async () =>
 const Page = async () => {
   const t = await getTranslate();
   return (
-    <SettingsHeader title={t("feature_flags")} description={t("admin_flags_description")}>
+    <SettingsHeader
+      title={t("feature_flags")}
+      description={t("admin_flags_description", { appName: APP_NAME })}>
       <FlagListingView />
     </SettingsHeader>
   );

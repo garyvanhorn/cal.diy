@@ -1,10 +1,9 @@
-import { useRouter } from "next/navigation";
-import type { ComponentProps } from "react";
-import React from "react";
-
+import { APP_NAME } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { EmptyScreen } from "@calcom/ui/components/empty-screen";
-
+import { useRouter } from "next/navigation";
+import type React from "react";
+import type { ComponentProps } from "react";
 import Shell from "~/shell/Shell";
 
 type AppsLayoutProps = {
@@ -25,7 +24,7 @@ export default function AppsLayout({ children, actions, emptyStore, isAdmin, ...
           {emptyStore ? (
             <EmptyScreen
               Icon="circle-alert"
-              headline={isAdmin ? t("no_apps") : t("no_apps_configured")}
+              headline={isAdmin ? t("no_apps", { appName: APP_NAME }) : t("no_apps_configured")}
               description={isAdmin ? t("enable_in_settings") : t("please_contact_admin")}
               buttonText={isAdmin ? t("apps_settings") : ""}
               buttonOnClick={() => router.push("/settings/admin/apps/calendar")}

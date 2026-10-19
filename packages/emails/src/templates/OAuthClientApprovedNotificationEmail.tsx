@@ -1,7 +1,5 @@
-import type { TFunction } from "i18next";
-
 import { APP_NAME, WEBAPP_URL } from "@calcom/lib/constants";
-
+import type { TFunction } from "i18next";
 import { BaseEmailHtml, CallToAction } from "../components";
 
 type OAuthClientApprovedNotification = {
@@ -78,7 +76,7 @@ export const OAuthClientApprovedNotificationEmail = ({
         </tbody>
       </table>
       <p style={{ fontWeight: 400, lineHeight: "24px", marginTop: "20px" }}>
-        {language("oauth_client_approved_email_footer")}
+        {language("oauth_client_approved_email_footer", { appName: APP_NAME })}
       </p>
     </BaseEmailHtml>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { APP_NAME } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import classNames from "@calcom/ui/classNames";
 import { Badge } from "@calcom/ui/components/badge";
@@ -144,7 +145,7 @@ export const OnboardingView = ({ userEmail }: OnboardingViewProps) => {
         {/* Left column - Main content */}
         <OnboardingCard
           title={t("onboarding_select_plan")}
-          subtitle={t("onboarding_welcome_question")}
+          subtitle={t("onboarding_welcome_question", { appName: APP_NAME })}
           footer={
             <div className="flex w-full justify-end gap-2">
               <Button
