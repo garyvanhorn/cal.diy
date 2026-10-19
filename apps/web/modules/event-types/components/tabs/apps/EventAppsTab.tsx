@@ -182,7 +182,7 @@ export const EventAppsTab = ({
                   i18nKey="available_apps_desc"
                   components={[
                     <Link key="available_apps_desc" className="cursor-pointer underline" href="/apps">
-                      App Store
+                      Integrations
                     </Link>,
                   ]}
                 />

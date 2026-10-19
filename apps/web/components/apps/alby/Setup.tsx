@@ -170,7 +170,7 @@ function AlbySetupPage(props: IAlbySetupProps) {
               Alby app again.
             </div>
             <Link href="/apps/alby">
-              <Button color="secondary">Go to App Store Listing</Button>
+              <Button color="secondary">Go to integration listing</Button>
             </Link>
           </div>
         </div>
