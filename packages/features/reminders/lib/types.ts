@@ -7,6 +7,13 @@ export type ReminderRuleDto = {
   minutesBefore: number;
 };
 
+export type EventTypeRemindersWithManagedParentDto = {
+  rules: ReminderRuleDto[];
+  metadata: unknown;
+  /** Null unless the event type is a managed event type's child. */
+  parentRules: ReminderRuleDto[] | null;
+};
+
 export const bookingReminderTaskPayloadSchema = z.object({
   bookingUid: z.string(),
   attendeeId: z.number().int(),

@@ -1,6 +1,7 @@
 import { BookingStatus } from "@calcom/prisma/enums";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { BookingReminderTaskPayload } from "../lib/types";
+import { EventTypeReminderService } from "./EventTypeReminderService";
 import { ReminderDeliveryService } from "./ReminderDeliveryService";
 
 const now = new Date("2026-10-20T00:00:00.000Z");
@@ -23,7 +24,7 @@ const acceptedBooking = {
 
 describe("ReminderDeliveryService", () => {
   const bookingRepository = { findByUidIncludeAttendeesAndPayments: vi.fn() };
-  const eventTypeReminderRepository = { findByEventTypeId: vi.fn() };
+  const eventTypeReminderService = { getEffectiveRules: vi.fn() };
   const sender = { send: vi.fn() };
   const reminderSenderFactory = { getSender: vi.fn() };
   let service: ReminderDeliveryService;
@@ -31,13 +32,11 @@ describe("ReminderDeliveryService", () => {
   beforeEach(() => {
     vi.resetAllMocks();
     bookingRepository.findByUidIncludeAttendeesAndPayments.mockResolvedValue(acceptedBooking);
-    eventTypeReminderRepository.findByEventTypeId.mockResolvedValue([
-      { channel: "EMAIL", minutesBefore: 120 },
-    ]);
+    eventTypeReminderService.getEffectiveRules.mockResolvedValue([{ channel: "EMAIL", minutesBefore: 120 }]);
     reminderSenderFactory.getSender.mockReturnValue(sender);
     service = new ReminderDeliveryService({
       bookingRepository,
-      eventTypeReminderRepository,
+      eventTypeReminderService,
       reminderSenderFactory,
     });
   });
@@ -84,9 +83,7 @@ describe("ReminderDeliveryService", () => {
   });
 
   it("skips when the rule was removed from the event type", async () => {
-    eventTypeReminderRepository.findByEventTypeId.mockResolvedValue([
-      { channel: "EMAIL", minutesBefore: 1440 },
-    ]);
+    eventTypeReminderService.getEffectiveRules.mockResolvedValue([{ channel: "EMAIL", minutesBefore: 1440 }]);
 
     await expect(service.deliver(payload, now)).resolves.toEqual({ sent: false, reason: "rule_removed" });
     expect(sender.send).not.toHaveBeenCalled();
@@ -96,5 +93,24 @@ describe("ReminderDeliveryService", () => {
     sender.send.mockRejectedValue(new Error("SMTP down"));
 
     await expect(service.deliver(payload, now)).rejects.toThrow("SMTP down");
+  });
+
+  it("checks a child booking's reminder against the parent's current rules", async () => {
+    const eventTypeReminderRepository = {
+      findByEventTypeIdIncludeManagedParent: vi.fn().mockResolvedValue({
+        rules: [],
+        metadata: {},
+        parentRules: [{ channel: "EMAIL", minutesBefore: 1440 }],
+      }),
+      replaceForChannel: vi.fn(),
+    };
+    service = new ReminderDeliveryService({
+      bookingRepository,
+      eventTypeReminderService: new EventTypeReminderService({ eventTypeReminderRepository }),
+      reminderSenderFactory,
+    });
+
+    await expect(service.deliver({ ...payload, minutesBefore: 1440 }, now)).resolves.toEqual({ sent: true });
+    await expect(service.deliver(payload, now)).resolves.toEqual({ sent: false, reason: "rule_removed" });
   });
 });

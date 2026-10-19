@@ -1,5 +1,6 @@
 import { BookingStatus } from "@calcom/prisma/enums";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { EventTypeReminderService } from "./EventTypeReminderService";
 import { ReminderSchedulerService } from "./ReminderSchedulerService";
 
 const now = new Date("2026-10-20T00:00:00.000Z");
@@ -12,7 +13,7 @@ const booking = {
 
 describe("ReminderSchedulerService", () => {
   const bookingRepository = { findByUidIncludeAttendeesAndPayments: vi.fn() };
-  const eventTypeReminderRepository = { findByEventTypeId: vi.fn() };
+  const eventTypeReminderService = { getEffectiveRules: vi.fn() };
   const reminderTaskRepository = {
     createMany: vi.fn(),
     deletePendingByReferenceUidPrefix: vi.fn(),
@@ -25,13 +26,13 @@ describe("ReminderSchedulerService", () => {
     reminderTaskRepository.deletePendingByReferenceUidPrefix.mockResolvedValue(0);
     service = new ReminderSchedulerService({
       bookingRepository,
-      eventTypeReminderRepository,
+      eventTypeReminderService,
       reminderTaskRepository,
     });
   });
 
   it("clears pending reminders, then schedules one per rule", async () => {
-    eventTypeReminderRepository.findByEventTypeId.mockResolvedValue([
+    eventTypeReminderService.getEffectiveRules.mockResolvedValue([
       { channel: "EMAIL", minutesBefore: 1440 },
       { channel: "EMAIL", minutesBefore: 120 },
     ]);
@@ -42,7 +43,7 @@ describe("ReminderSchedulerService", () => {
     expect(reminderTaskRepository.deletePendingByReferenceUidPrefix).toHaveBeenCalledWith(
       "reminder:booking-uid:"
     );
-    expect(eventTypeReminderRepository.findByEventTypeId).toHaveBeenCalledWith(7);
+    expect(eventTypeReminderService.getEffectiveRules).toHaveBeenCalledWith(7);
     const [tasks] = reminderTaskRepository.createMany.mock.calls[0];
     expect(tasks.map((task: { referenceUid: string }) => task.referenceUid)).toEqual([
       "reminder:booking-uid:1:EMAIL:1440",
@@ -58,12 +59,12 @@ describe("ReminderSchedulerService", () => {
 
     expect(count).toBe(0);
     expect(reminderTaskRepository.deletePendingByReferenceUidPrefix).toHaveBeenCalledOnce();
-    expect(eventTypeReminderRepository.findByEventTypeId).not.toHaveBeenCalled();
+    expect(eventTypeReminderService.getEffectiveRules).not.toHaveBeenCalled();
     expect(reminderTaskRepository.createMany).not.toHaveBeenCalled();
   });
 
   it("schedules nothing when the event type has no reminders", async () => {
-    eventTypeReminderRepository.findByEventTypeId.mockResolvedValue([]);
+    eventTypeReminderService.getEffectiveRules.mockResolvedValue([]);
 
     const count = await service.scheduleForBooking(booking, now);
 
@@ -83,9 +84,7 @@ describe("ReminderSchedulerService", () => {
   describe("scheduleForBookingUid", () => {
     it.each([BookingStatus.ACCEPTED, BookingStatus.PENDING])("schedules a %s booking", async (status) => {
       bookingRepository.findByUidIncludeAttendeesAndPayments.mockResolvedValue({ ...booking, status });
-      eventTypeReminderRepository.findByEventTypeId.mockResolvedValue([
-        { channel: "EMAIL", minutesBefore: 60 },
-      ]);
+      eventTypeReminderService.getEffectiveRules.mockResolvedValue([{ channel: "EMAIL", minutesBefore: 60 }]);
 
       await expect(service.scheduleForBookingUid("booking-uid", now)).resolves.toBe(1);
       expect(bookingRepository.findByUidIncludeAttendeesAndPayments).toHaveBeenCalledWith({
@@ -105,6 +104,41 @@ describe("ReminderSchedulerService", () => {
         "reminder:booking-uid:"
       );
       expect(reminderTaskRepository.createMany).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("managed event type children", () => {
+    const eventTypeReminderRepository = {
+      findByEventTypeIdIncludeManagedParent: vi.fn(),
+      replaceForChannel: vi.fn(),
+    };
+    const childBooking = { ...booking, eventTypeId: 42 };
+
+    beforeEach(() => {
+      service = new ReminderSchedulerService({
+        bookingRepository,
+        eventTypeReminderService: new EventTypeReminderService({ eventTypeReminderRepository }),
+        reminderTaskRepository,
+      });
+    });
+
+    it("schedules a child booking from the parent's rules", async () => {
+      eventTypeReminderRepository.findByEventTypeIdIncludeManagedParent.mockResolvedValue({
+        rules: [],
+        metadata: {},
+        parentRules: [
+          { channel: "EMAIL", minutesBefore: 1440 },
+          { channel: "EMAIL", minutesBefore: 60 },
+        ],
+      });
+
+      await expect(service.scheduleForBooking(childBooking, now)).resolves.toBe(2);
+      expect(eventTypeReminderRepository.findByEventTypeIdIncludeManagedParent).toHaveBeenCalledWith(42);
+      const [tasks] = reminderTaskRepository.createMany.mock.calls[0];
+      expect(tasks.map((task: { referenceUid: string }) => task.referenceUid)).toEqual([
+        "reminder:booking-uid:1:EMAIL:1440",
+        "reminder:booking-uid:1:EMAIL:60",
+      ]);
     });
   });
 });

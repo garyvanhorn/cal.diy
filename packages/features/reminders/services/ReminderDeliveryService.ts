@@ -1,12 +1,12 @@
 import type { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
 import { BookingStatus } from "@calcom/prisma/enums";
 import type { BookingReminderTaskPayload } from "../lib/types";
-import type { EventTypeReminderRepository } from "../repositories/EventTypeReminderRepository";
+import type { EventTypeReminderService } from "./EventTypeReminderService";
 import type { ReminderSenderFactory } from "./ReminderSenderFactory";
 
 export interface IReminderDeliveryServiceDeps {
   bookingRepository: Pick<BookingRepository, "findByUidIncludeAttendeesAndPayments">;
-  eventTypeReminderRepository: Pick<EventTypeReminderRepository, "findByEventTypeId">;
+  eventTypeReminderService: Pick<EventTypeReminderService, "getEffectiveRules">;
   reminderSenderFactory: Pick<ReminderSenderFactory, "getSender">;
 }
 
@@ -62,7 +62,7 @@ export class ReminderDeliveryService {
     if (!booking.attendees.some((attendee) => attendee.id === payload.attendeeId)) return "attendee_removed";
 
     if (!booking.eventTypeId) return "rule_removed";
-    const rules = await this.deps.eventTypeReminderRepository.findByEventTypeId(booking.eventTypeId);
+    const rules = await this.deps.eventTypeReminderService.getEffectiveRules(booking.eventTypeId);
     const ruleStillActive = rules.some(
       (rule) => rule.channel === payload.channel && rule.minutesBefore === payload.minutesBefore
     );

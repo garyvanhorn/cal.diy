@@ -1,12 +1,12 @@
 import type { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
 import { BookingStatus } from "@calcom/prisma/enums";
 import { buildReminderTasks, getReminderReferenceUidPrefix } from "../lib/reminderTasks";
-import type { EventTypeReminderRepository } from "../repositories/EventTypeReminderRepository";
 import type { ReminderTaskRepository } from "../repositories/ReminderTaskRepository";
+import type { EventTypeReminderService } from "./EventTypeReminderService";
 
 export interface IReminderSchedulerServiceDeps {
   bookingRepository: Pick<BookingRepository, "findByUidIncludeAttendeesAndPayments">;
-  eventTypeReminderRepository: Pick<EventTypeReminderRepository, "findByEventTypeId">;
+  eventTypeReminderService: Pick<EventTypeReminderService, "getEffectiveRules">;
   reminderTaskRepository: Pick<ReminderTaskRepository, "createMany" | "deletePendingByReferenceUidPrefix">;
 }
 
@@ -28,7 +28,7 @@ export class ReminderSchedulerService {
     await this.cancelForBooking(booking.uid);
     if (!booking.eventTypeId) return 0;
 
-    const rules = await this.deps.eventTypeReminderRepository.findByEventTypeId(booking.eventTypeId);
+    const rules = await this.deps.eventTypeReminderService.getEffectiveRules(booking.eventTypeId);
     const tasks = buildReminderTasks({ booking, rules, now });
     return this.deps.reminderTaskRepository.createMany(tasks);
   }
