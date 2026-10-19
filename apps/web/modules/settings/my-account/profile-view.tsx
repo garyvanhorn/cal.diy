@@ -4,7 +4,7 @@ import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import SettingsHeader from "@calcom/features/settings/appDir/SettingsHeader";
 import SectionBottomActions from "@calcom/features/settings/SectionBottomActions";
-import { APP_NAME, FULL_NAME_LENGTH_MAX_LIMIT } from "@calcom/lib/constants";
+import { APP_NAME, FULL_NAME_LENGTH_MAX_LIMIT, WEBSITE_URL } from "@calcom/lib/constants";
 import { emailSchema } from "@calcom/lib/emailSchema";
 import { getUserAvatarUrl } from "@calcom/lib/getAvatarUrl";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -650,7 +650,7 @@ const ProfileForm = ({
         {extraField}
         <p className="mt-1 flex gap-1 text-sm text-subtle">
           <InfoIcon className="mt-0.5 shrink-0" />
-          <span className="flex-1">{t("tip_username_plus")}</span>
+          <span className="flex-1">{t("tip_username_plus", { domain: new URL(WEBSITE_URL).host })}</span>
         </p>
         <div className="mt-6">
           <TextField label={t("full_name")} {...formMethods.register("name")} />

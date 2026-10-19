@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import AppNotInstalledMessage from "@calcom/app-store/_components/AppNotInstalledMessage";
 import type { getServerSideProps } from "@calcom/app-store/make/pages/setup/_getServerSideProps";
 import ServerTrans from "@calcom/lib/components/ServerTrans";
+import { APP_NAME } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { trpc } from "@calcom/trpc/react";
 import { Button } from "@calcom/ui/components/button";
@@ -115,6 +116,7 @@ export default function MakeSetup({ inviteLink }: InferGetServerSidePropsType<ty
                   <ServerTrans
                     t={t}
                     i18nKey="make_setup_instructions_1"
+                    values={{ appName: APP_NAME }}
                     components={[
                       <a
                         key="make-invite-link"
@@ -126,7 +128,7 @@ export default function MakeSetup({ inviteLink }: InferGetServerSidePropsType<ty
                   />
                 </li>
                 <li>{t("make_setup_instructions_2")}</li>
-                <li>{t("make_setup_instructions_3")}</li>
+                <li>{t("make_setup_instructions_3", { appName: APP_NAME })}</li>
                 <li>{t("make_setup_instructions_4")}</li>
                 <li>{t("make_setup_instructions_5")}</li>
                 <li>{t("make_setup_instructions_6")}</li>

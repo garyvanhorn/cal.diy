@@ -2,6 +2,7 @@
 
 import dayjs from "@calcom/dayjs";
 import {
+  APP_NAME,
   RECORDING_DEFAULT_ICON,
   TRANSCRIPTION_STOPPED_ICON,
   WEBAPP_URL,
@@ -400,7 +401,7 @@ export function LogInOverlay(props: LogInOverlayProps) {
       }
     } catch (error) {
       const errorKey = error instanceof Error ? error.message : "failed_to_join_call";
-      const errorMessage = t(errorKey) || errorKey;
+      const errorMessage = t(errorKey, { appName: APP_NAME }) || errorKey;
       setError(errorMessage);
       setIsLoading(false);
     }

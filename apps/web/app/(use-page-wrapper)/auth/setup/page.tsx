@@ -1,21 +1,19 @@
-import { withAppDirSsr } from "app/WithAppDirSsr";
+import { APP_NAME } from "@calcom/lib/constants";
+import { buildLegacyCtx } from "@lib/buildLegacyCtx";
+import { getServerSideProps } from "@server/lib/setup/getServerSideProps";
 import type { PageProps as ServerPageProps } from "app/_types";
 import { _generateMetadata } from "app/_utils";
+import { withAppDirSsr } from "app/WithAppDirSsr";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-
-import { buildLegacyCtx } from "@lib/buildLegacyCtx";
-
-import { getServerSideProps } from "@server/lib/setup/getServerSideProps";
-
-import Setup from "~/auth/setup-view";
 import type { PageProps as ClientPageProps } from "~/auth/setup-view";
+import Setup from "~/auth/setup-view";
 
 export const generateMetadata = async () => {
   return await _generateMetadata(
     (t) => t("setup"),
-    (t) => t("setup_description"),
+    (t) => t("setup_description", { appName: APP_NAME }),
     undefined,
     undefined,
     "/auth/setup"
