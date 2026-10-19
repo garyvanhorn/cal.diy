@@ -75,7 +75,6 @@ export type ManagedEventCancellationResult = {
   status: BookingStatus;
 };
 
-
 type TeamBookingsParamsBase = {
   user: { id: number; email: string };
   teamId: number;
@@ -474,6 +473,21 @@ export class BookingRepository implements IBookingRepository {
           },
         },
         noShowHost: true,
+      },
+    });
+  }
+
+  async findByUidIncludeAttendeesAndPayments({ bookingUid }: { bookingUid: string }) {
+    return await this.prismaClient.booking.findUnique({
+      where: { uid: bookingUid },
+      select: {
+        uid: true,
+        status: true,
+        startTime: true,
+        eventTypeId: true,
+        paid: true,
+        attendees: { select: { id: true } },
+        payment: { select: { success: true } },
       },
     });
   }
