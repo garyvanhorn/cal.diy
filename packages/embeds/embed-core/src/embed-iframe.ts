@@ -279,7 +279,7 @@ export const useIsEmbed = (embedSsr?: boolean) => {
     const _isValidNamespace = isValidNamespace(namespace);
     if (parent !== window && !_isValidNamespace) {
       log(
-        "Looks like you have iframed cal.com but not using Embed Snippet. Directly using an iframe isn't recommended."
+        "Looks like you have iframed the booking page without the embed snippet. Directly using an iframe isn't recommended."
       );
     }
     setIsEmbed(window?.isEmbed?.() || false);
@@ -350,7 +350,7 @@ export const methods = {
 
     if (stylesConfig) {
       console.warn(
-        "Cal.diy Embed: `styles` prop is deprecated. Use `cssVarsPerTheme` instead to achieve the same effect. Here is a list of CSS variables that are supported. https://github.com/calcom/cal.diy/blob/main/packages/config/tailwind-preset.js#L19"
+        "Embed: `styles` prop is deprecated. Use `cssVarsPerTheme` instead to achieve the same effect."
       );
     }
 
