@@ -416,7 +416,9 @@ export default function Signup({
                 )}
                 <div className="flex flex-col gap-2">
                   <h1 className="font-cal text-[28px] leading-none">
-                    {IS_CALCOM ? t("create_your_calcom_account") : t("create_your_account")}
+                    {IS_CALCOM
+                      ? t("create_your_calcom_account", { appName: APP_NAME })
+                      : t("create_your_account")}
                   </h1>
                   {IS_CALCOM ? (
                     <p className="font-medium text-base text-subtle leading-5">
@@ -511,15 +513,8 @@ export default function Signup({
                           setPremium={(value) => setPremiumUsername(value)}
                           addOnLeading={
                             orgSlug
-                              ? truncateDomain(
-                                  `${WEBAPP_URL.replace(
-                                    URL_PROTOCOL_REGEX,
-                                    ""
-                                  )}/`
-                                )
-                              : truncateDomain(
-                                  `${WEBSITE_URL.replace(URL_PROTOCOL_REGEX, "")}/`
-                                )
+                              ? truncateDomain(`${WEBAPP_URL.replace(URL_PROTOCOL_REGEX, "")}/`)
+                              : truncateDomain(`${WEBSITE_URL.replace(URL_PROTOCOL_REGEX, "")}/`)
                           }
                         />
                       ) : null}

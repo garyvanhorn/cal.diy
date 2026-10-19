@@ -1,7 +1,5 @@
+import { APP_NAME, EMAIL_FROM_NAME } from "@calcom/lib/constants";
 import type { TFunction } from "i18next";
-
-import { EMAIL_FROM_NAME } from "@calcom/lib/constants";
-
 import renderEmail from "../src/renderEmail";
 import BaseEmail from "./_base-email";
 
@@ -38,7 +36,10 @@ export default class SlugReplacementEmail extends BaseEmail {
 
   protected getTextBody(): string {
     return `${this.t("email_body_slug_replacement_notice", { slug: this.slug })} ${this.t(
-      "email_body_slug_replacement_suggestion"
+      "email_body_slug_replacement_suggestion",
+      {
+        appName: APP_NAME,
+      }
     )}`;
   }
 }
