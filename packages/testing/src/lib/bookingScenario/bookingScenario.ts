@@ -1722,10 +1722,7 @@ export async function mockCalendar(
           throw new Error("MockCalendarService.createEvent fake error");
         }
         const [calEvent, credentialId, externalCalendarId] = rest;
-        log.debug(
-          "mockCalendar.createEvent",
-          JSON.stringify({ calEvent, credentialId, externalCalendarId })
-        );
+        log.debug("mockCalendar.createEvent", JSON.stringify({ calEvent, credentialId, externalCalendarId }));
         createEventCalls.push({
           args: {
             calEvent,
@@ -1750,8 +1747,7 @@ export async function mockCalendar(
               "https://GOOGLE_MEET_URL_IN_CALENDAR_EVENT",
             uid: normalizedCalendarData.create?.uid || "GOOGLE_CALENDAR_EVENT_ID",
             id: normalizedCalendarData.create?.id || "GOOGLE_CALENDAR_EVENT_ID",
-            iCalUID:
-              normalizedCalendarData.create?.iCalUID || calEvent.iCalUID || "GOOGLE_CALENDAR_EVENT_ID",
+            iCalUID: normalizedCalendarData.create?.iCalUID || calEvent.iCalUID || "GOOGLE_CALENDAR_EVENT_ID",
             password: "MOCK_PASSWORD",
             url:
               normalizedCalendarData.create?.appSpecificData?.googleCalendar?.hangoutLink ||
@@ -1767,8 +1763,7 @@ export async function mockCalendar(
               normalizedCalendarData.create?.iCalUID || calEvent.iCalUID || "OFFICE_365_CALENDAR_EVENT_ID",
             password: "MOCK_PASSWORD",
             url:
-              normalizedCalendarData.create?.appSpecificData?.office365Calendar?.url ||
-              "https://UNUSED_URL",
+              normalizedCalendarData.create?.appSpecificData?.office365Calendar?.url || "https://UNUSED_URL",
           });
         } else {
           return Promise.resolve({
@@ -2183,11 +2178,12 @@ export function getMockBookingReference(
 }
 
 export function getMockBookingAttendee(
-  attendee: Omit<Attendee, "bookingId" | "phoneNumber" | "email" | "noShow"> & {
+  attendee: Omit<Attendee, "bookingId" | "phoneNumber" | "email" | "noShow" | "confirmedAt"> & {
     bookingSeat?: AttendeeBookingSeatInput;
     phoneNumber?: string | null;
     email: string;
     noShow?: boolean;
+    confirmedAt?: Date | null;
   }
 ) {
   return {
@@ -2199,6 +2195,7 @@ export function getMockBookingAttendee(
     bookingSeat: attendee.bookingSeat || null,
     phoneNumber: attendee.phoneNumber ?? undefined,
     noShow: attendee.noShow ?? false,
+    confirmedAt: attendee.confirmedAt ?? null,
   };
 }
 

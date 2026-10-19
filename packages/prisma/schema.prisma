@@ -286,6 +286,7 @@ model EventType {
   rrHostSubsetEnabled           Boolean                        @default(false)
   requiresCancellationReason    CancellationReasonRequirement? @default(MANDATORY_HOST_ONLY)
   enablePerHostLocations        Boolean                        @default(false)
+  reminders                     EventTypeReminder[]
 
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
@@ -834,6 +835,8 @@ model Attendee {
   bookingId   Int?
   bookingSeat BookingSeat?
   noShow      Boolean?     @default(false)
+  // Set when the attendee taps "Confirm" in a reminder
+  confirmedAt DateTime?
 
   @@index([email])
   @@index([bookingId])
@@ -1090,6 +1093,23 @@ model ReminderMail {
 
   @@index([referenceId])
   @@index([reminderType])
+}
+
+enum ReminderChannel {
+  EMAIL @map("email")
+  SMS   @map("sms")
+}
+
+model EventTypeReminder {
+  id            Int             @id @default(autoincrement())
+  eventTypeId   Int
+  eventType     EventType       @relation(fields: [eventTypeId], references: [id], onDelete: Cascade)
+  channel       ReminderChannel @default(EMAIL)
+  minutesBefore Int
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@unique([eventTypeId, channel, minutesBefore])
 }
 
 model Payment {
