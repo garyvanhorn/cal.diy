@@ -19,6 +19,7 @@ import PhoneInput from "@calcom/web/components/phone-input";
 import invertLogoOnDark from "@calcom/lib/invertLogoOnDark";
 import type { LocationOption } from "@calcom/features/form/components/LocationSelect";
 import LocationSelect from "@calcom/features/form/components/LocationSelect";
+import { APP_NAME } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { trpc } from "@calcom/trpc/react";
 import { Alert } from "@calcom/ui/components/alert";
@@ -531,7 +532,7 @@ const MassApplyLocationDialog = ({ isOpen, onClose, onApply, isApplying }: MassA
               setInputValue={setInputValue}
             />
           )}
-          <Alert severity="info" title={t("mass_apply_fallback_explanation")} />
+          <Alert severity="info" title={t("mass_apply_fallback_explanation", { appName: APP_NAME })} />
         </div>
         <DialogFooter>
           <Button type="button" color="secondary" onClick={handleClose}>
@@ -712,7 +713,7 @@ const HostList = ({
         )}
       </div>
 
-      <p className="text-subtle text-xs">{t("host_locations_fallback_description")}</p>
+      <p className="text-subtle text-xs">{t("host_locations_fallback_description", { appName: APP_NAME })}</p>
     </div>
   );
 };

@@ -88,7 +88,9 @@ export function WelcomeToCalcomModal() {
             {features.map((feature) => (
               <div key={feature} className="flex items-start gap-2">
                 <CheckIcon className="text-muted mt-0.5 h-4 w-4 shrink-0" />
-                <span className="text-default text-sm font-medium leading-tight">{t(feature)}</span>
+                <span className="text-default text-sm font-medium leading-tight">
+                  {t(feature, { appName: APP_NAME })}
+                </span>
               </div>
             ))}
           </div>

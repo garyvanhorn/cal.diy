@@ -74,7 +74,7 @@ export const tabs = [
   </script>
   <!-- Cal ${embedType} embed code ends -->`}
           />
-          <p className="text-subtle hidden text-sm">{t("need_help_embedding")}</p>
+          <p className="text-subtle hidden text-sm">{t("need_help_embedding", { appName: APP_NAME })}</p>
         </>
       );
     }),

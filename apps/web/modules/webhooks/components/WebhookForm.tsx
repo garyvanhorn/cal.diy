@@ -6,7 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import SectionBottomActions from "@calcom/features/settings/SectionBottomActions";
 import customTemplate, { hasTemplateIntegration } from "@calcom/features/webhooks/lib/integrationTemplate";
 import { WebhookVersion } from "@calcom/features/webhooks/lib/interface/IWebhookRepository";
-import { WEBAPP_URL } from "@calcom/lib/constants";
+import { APP_NAME, WEBAPP_URL } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { TimeUnit, WebhookTriggerEvents } from "@calcom/prisma/enums";
 import type { RouterOutputs } from "@calcom/trpc/react";
@@ -18,7 +18,6 @@ import { Form } from "@calcom/ui/components/form";
 import { Label } from "@calcom/ui/components/form";
 import { TextField } from "@calcom/ui/components/form";
 import { Switch } from "@calcom/ui/components/form";
-
 
 import WebhookTestDisclosure from "./WebhookTestDisclosure";
 
@@ -266,7 +265,10 @@ const WebhookForm = (props: {
       }
     }
   }
-  const translatedTriggerOptions = triggerOptions.map((option) => ({ ...option, label: t(option.label) }));
+  const translatedTriggerOptions = triggerOptions.map((option) => ({
+    ...option,
+    label: t(option.label, { appName: APP_NAME }),
+  }));
 
   const getEventTriggers = () => {
     if (props.webhook) return props.webhook.eventTriggers;
@@ -444,7 +446,7 @@ const WebhookForm = (props: {
 
         {showTimeSection && (
           <div className="mt-5">
-            <Label>{t("how_long_after_user_no_show_minutes")}</Label>
+            <Label>{t("how_long_after_user_no_show_minutes", { appName: APP_NAME })}</Label>
             <div />
           </div>
         )}

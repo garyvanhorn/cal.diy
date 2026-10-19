@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import SectionBottomActions from "@calcom/features/settings/SectionBottomActions";
+import { APP_NAME } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { IdentityProvider } from "@calcom/prisma/enums";
 import { userMetadata as userMetadataSchema } from "@calcom/prisma/zod-utils";
@@ -103,7 +104,7 @@ const PasswordView = ({ user }: PasswordViewProps) => {
       }
     },
     onError: (error) => {
-      showToast(`${t("error_updating_password")}, ${t(error.message)}`, "error");
+      showToast(`${t("error_updating_password")}, ${t(error.message, { appName: APP_NAME })}`, "error");
 
       formMethods.setError("apiError", {
         message: t(error.message),
@@ -117,7 +118,10 @@ const PasswordView = ({ user }: PasswordViewProps) => {
       showToast(t("password_reset_email", { email: user.email }), "success");
     },
     onError: (error) => {
-      showToast(`${t("error_creating_account_password")}, ${t(error.message)}`, "error");
+      showToast(
+        `${t("error_creating_account_password")}, ${t(error.message, { appName: APP_NAME })}`,
+        "error"
+      );
     },
   });
 
@@ -142,7 +146,8 @@ const PasswordView = ({ user }: PasswordViewProps) => {
     value: mins,
   }));
 
-  const isDisabled = formMethods.formState.isSubmitting || !formMethods.formState.isDirty || !formMethods.formState.isValid;
+  const isDisabled =
+    formMethods.formState.isSubmitting || !formMethods.formState.isDirty || !formMethods.formState.isValid;
 
   const passwordMinLength = data?.user.role === "USER" ? 7 : 15;
   const isUser = data?.user.role === "USER";
