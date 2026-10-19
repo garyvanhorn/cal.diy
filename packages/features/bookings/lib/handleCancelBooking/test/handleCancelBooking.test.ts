@@ -17,6 +17,15 @@ import { setupAndTeardown } from "@calcom/testing/lib/bookingScenario/setupAndTe
 
 import { describe, expect, vi } from "vitest";
 
+const { scheduleBookingReminders, cancelBookingReminders } = vi.hoisted(() => ({
+  scheduleBookingReminders: vi.fn(),
+  cancelBookingReminders: vi.fn(),
+}));
+vi.mock("@calcom/features/reminders/lib/bookingReminderHooks", () => ({
+  scheduleBookingReminders,
+  cancelBookingReminders,
+}));
+
 import { processPaymentRefund } from "@calcom/features/bookings/lib/payment/processPaymentRefund";
 import { BookingStatus } from "@calcom/prisma/enums";
 import { test } from "@calcom/testing/lib/fixtures/fixtures";
@@ -125,6 +134,8 @@ describe("Cancel Booking", () => {
         cancellationReason: "No reason",
       },
     });
+
+    expect(cancelBookingReminders).toHaveBeenCalledWith([uidOfBookingToBeCancelled]);
 
     expectBookingCancelledWebhookToHaveBeenFired({
       booker,

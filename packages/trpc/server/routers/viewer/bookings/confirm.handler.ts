@@ -1,3 +1,4 @@
+import { cancelBookingReminders } from "@calcom/features/reminders/lib/bookingReminderHooks";
 import { getUsersCredentialsIncludeServiceAccountKey } from "@calcom/app-store/delegationCredential";
 import type { LocationObject } from "@calcom/app-store/locations";
 import { getLocationValueForDB } from "@calcom/app-store/locations";
@@ -436,6 +437,8 @@ export const confirmHandler = async ({ ctx, input }: ConfirmOptions) => {
         },
       ];
     }
+
+    await cancelBookingReminders(rejectedBookings.map((rejectedBooking) => rejectedBooking.uid));
 
     if (emailsEnabled) {
       await sendDeclinedEmailsAndSMS(evt, booking.eventType?.metadata as EventTypeMetadata);

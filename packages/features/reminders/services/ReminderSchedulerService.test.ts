@@ -1,3 +1,4 @@
+import { BookingStatus } from "@calcom/prisma/enums";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ReminderSchedulerService } from "./ReminderSchedulerService";
 
@@ -10,6 +11,7 @@ const booking = {
 };
 
 describe("ReminderSchedulerService", () => {
+  const bookingRepository = { findByUidIncludeAttendeesAndPayments: vi.fn() };
   const eventTypeReminderRepository = { findByEventTypeId: vi.fn() };
   const reminderTaskRepository = {
     createMany: vi.fn(),
@@ -21,7 +23,11 @@ describe("ReminderSchedulerService", () => {
     vi.resetAllMocks();
     reminderTaskRepository.createMany.mockImplementation(async (tasks: unknown[]) => tasks.length);
     reminderTaskRepository.deletePendingByReferenceUidPrefix.mockResolvedValue(0);
-    service = new ReminderSchedulerService({ eventTypeReminderRepository, reminderTaskRepository });
+    service = new ReminderSchedulerService({
+      bookingRepository,
+      eventTypeReminderRepository,
+      reminderTaskRepository,
+    });
   });
 
   it("clears pending reminders, then schedules one per rule", async () => {
@@ -72,5 +78,33 @@ describe("ReminderSchedulerService", () => {
     expect(reminderTaskRepository.deletePendingByReferenceUidPrefix).toHaveBeenCalledWith(
       "reminder:booking-uid:"
     );
+  });
+
+  describe("scheduleForBookingUid", () => {
+    it.each([BookingStatus.ACCEPTED, BookingStatus.PENDING])("schedules a %s booking", async (status) => {
+      bookingRepository.findByUidIncludeAttendeesAndPayments.mockResolvedValue({ ...booking, status });
+      eventTypeReminderRepository.findByEventTypeId.mockResolvedValue([
+        { channel: "EMAIL", minutesBefore: 60 },
+      ]);
+
+      await expect(service.scheduleForBookingUid("booking-uid", now)).resolves.toBe(1);
+      expect(bookingRepository.findByUidIncludeAttendeesAndPayments).toHaveBeenCalledWith({
+        bookingUid: "booking-uid",
+      });
+    });
+
+    it.each([
+      ["missing", null],
+      ["cancelled", { ...booking, status: BookingStatus.CANCELLED }],
+      ["rejected", { ...booking, status: BookingStatus.REJECTED }],
+    ])("only clears reminders when the booking is %s", async (_case, found) => {
+      bookingRepository.findByUidIncludeAttendeesAndPayments.mockResolvedValue(found);
+
+      await expect(service.scheduleForBookingUid("booking-uid", now)).resolves.toBe(0);
+      expect(reminderTaskRepository.deletePendingByReferenceUidPrefix).toHaveBeenCalledWith(
+        "reminder:booking-uid:"
+      );
+      expect(reminderTaskRepository.createMany).not.toHaveBeenCalled();
+    });
   });
 });

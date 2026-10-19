@@ -59,7 +59,16 @@ import { testWithAndWithoutOrg } from "@calcom/testing/lib/bookingScenario/test"
 import { test } from "@calcom/testing/lib/fixtures/fixtures";
 import type { Request, Response } from "express";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { describe, expect } from "vitest";
+import { describe, expect, vi } from "vitest";
+
+const { scheduleBookingReminders, cancelBookingReminders } = vi.hoisted(() => ({
+  scheduleBookingReminders: vi.fn(),
+  cancelBookingReminders: vi.fn(),
+}));
+vi.mock("@calcom/features/reminders/lib/bookingReminderHooks", () => ({
+  scheduleBookingReminders,
+  cancelBookingReminders,
+}));
 import type Stripe from "stripe";
 import { getNewBookingHandler } from "./getNewBookingHandler";
 
@@ -213,6 +222,8 @@ describe("handleNewBooking", () => {
           bookingData: mockBookingData,
         });
 
+        expect(scheduleBookingReminders).toHaveBeenCalledWith([createdBooking.uid]);
+        expect(cancelBookingReminders).not.toHaveBeenCalled();
         expect(createdBooking.responses).toEqual(
           expect.objectContaining({
             email: booker.email,

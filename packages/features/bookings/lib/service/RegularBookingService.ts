@@ -105,6 +105,10 @@ import { loadAndValidateUsers } from "../handleNewBooking/loadAndValidateUsers";
 import type { BookingType } from "../handleNewBooking/originalRescheduledBookingUtils";
 import { getOriginalRescheduledBooking } from "../handleNewBooking/originalRescheduledBookingUtils";
 import { scheduleNoShowTriggers } from "../handleNewBooking/scheduleNoShowTriggers";
+import {
+  cancelBookingReminders,
+  scheduleBookingReminders,
+} from "@calcom/features/reminders/lib/bookingReminderHooks";
 import type { IEventTypePaymentCredentialType, Invitee, IsFixedAwareUser } from "../handleNewBooking/types";
 import { validateBookingTimeIsNotOutOfBounds } from "../handleNewBooking/validateBookingTimeIsNotOutOfBounds";
 import { validateEventLength } from "../handleNewBooking/validateEventLength";
@@ -2228,6 +2232,14 @@ async function handler(
     isRecurringBooking: !!input.bookingData.allRecurringDates,
     tracingLogger,
   });
+
+  if (!isDryRun) {
+    // A reschedule that still needs host approval keeps the original booking, so its reminders stay.
+    if (originalRescheduledBooking && isConfirmedByDefault) {
+      await cancelBookingReminders([originalRescheduledBooking.uid]);
+    }
+    await scheduleBookingReminders([booking.uid]);
+  }
 
   const webhookLocation = metadata?.videoCallUrl || evt.location;
 

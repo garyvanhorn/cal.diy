@@ -1,3 +1,4 @@
+import { cancelBookingReminders } from "@calcom/features/reminders/lib/bookingReminderHooks";
 import { DailyLocationType } from "@calcom/app-store/constants";
 import { FAKE_DAILY_CREDENTIAL } from "@calcom/app-store/dailyvideo/lib/VideoApiAdapter";
 import { eventTypeMetaDataSchemaWithTypedApps } from "@calcom/app-store/zod-utils";
@@ -489,6 +490,7 @@ async function handler(input: CancelBookingInput, dependencies?: Dependencies) {
       webhookTriggerPromises.push(deleteWebhookScheduledTriggers({ booking }));
       webhookTriggerPromises.push(cancelNoShowTasksForBooking({ bookingUid: booking.uid }));
     }
+    webhookTriggerPromises.push(cancelBookingReminders(updatedBookings.map((booking) => booking.uid)));
 
     await Promise.allSettled(webhookTriggerPromises).then((results) => {
       const rejectedReasons = results

@@ -1,8 +1,11 @@
+import type { BookingRepository } from "@calcom/features/bookings/repositories/BookingRepository";
+import { BookingStatus } from "@calcom/prisma/enums";
 import { buildReminderTasks, getReminderReferenceUidPrefix } from "../lib/reminderTasks";
 import type { EventTypeReminderRepository } from "../repositories/EventTypeReminderRepository";
 import type { ReminderTaskRepository } from "../repositories/ReminderTaskRepository";
 
 export interface IReminderSchedulerServiceDeps {
+  bookingRepository: Pick<BookingRepository, "findByUidIncludeAttendeesAndPayments">;
   eventTypeReminderRepository: Pick<EventTypeReminderRepository, "findByEventTypeId">;
   reminderTaskRepository: Pick<ReminderTaskRepository, "createMany" | "deletePendingByReferenceUidPrefix">;
 }
@@ -28,6 +31,16 @@ export class ReminderSchedulerService {
     const rules = await this.deps.eventTypeReminderRepository.findByEventTypeId(booking.eventTypeId);
     const tasks = buildReminderTasks({ booking, rules, now });
     return this.deps.reminderTaskRepository.createMany(tasks);
+  }
+
+  async scheduleForBookingUid(bookingUid: string, now: Date = new Date()): Promise<number> {
+    const booking = await this.deps.bookingRepository.findByUidIncludeAttendeesAndPayments({ bookingUid });
+    if (!booking || booking.status === BookingStatus.CANCELLED || booking.status === BookingStatus.REJECTED) {
+      return this.cancelForBooking(bookingUid).then(() => 0);
+    }
+    // Pending bookings (awaiting payment or host approval) are scheduled too; delivery re-checks
+    // the status at send time, so they only go out if the booking was accepted by then.
+    return this.scheduleForBooking(booking, now);
   }
 
   async cancelForBooking(bookingUid: string): Promise<number> {

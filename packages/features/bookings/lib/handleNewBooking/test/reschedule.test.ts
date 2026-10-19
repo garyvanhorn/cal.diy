@@ -36,7 +36,16 @@ import {
 import { getMockRequestDataForBooking } from "@calcom/testing/lib/bookingScenario/getMockRequestDataForBooking";
 import { setupAndTeardown } from "@calcom/testing/lib/bookingScenario/setupAndTeardown";
 
-import { describe, expect, beforeEach } from "vitest";
+import { beforeEach, describe, expect, vi } from "vitest";
+
+const { scheduleBookingReminders, cancelBookingReminders } = vi.hoisted(() => ({
+  scheduleBookingReminders: vi.fn(),
+  cancelBookingReminders: vi.fn(),
+}));
+vi.mock("@calcom/features/reminders/lib/bookingReminderHooks", () => ({
+  scheduleBookingReminders,
+  cancelBookingReminders,
+}));
 
 import { appStoreMetadata } from "@calcom/app-store/apps.metadata.generated";
 import { WEBAPP_URL } from "@calcom/lib/constants";
@@ -178,6 +187,9 @@ describe("handleNewBooking", () => {
           const createdBooking = await handleNewBooking({
             bookingData: mockBookingData,
           });
+
+          expect(cancelBookingReminders).toHaveBeenCalledWith([uidOfBookingToBeRescheduled]);
+          expect(scheduleBookingReminders).toHaveBeenCalledWith([createdBooking.uid]);
 
           const previousBooking = await prismaMock.booking.findUnique({
             where: {

@@ -17,7 +17,16 @@ import type { TRequestRescheduleInputSchema } from "@calcom/trpc/server/routers/
 import type { TrpcSessionUser } from "@calcom/trpc/server/types";
 import type { Request, Response } from "express";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { describe, expect } from "vitest";
+import { describe, expect, vi } from "vitest";
+
+const { scheduleBookingReminders, cancelBookingReminders } = vi.hoisted(() => ({
+  scheduleBookingReminders: vi.fn(),
+  cancelBookingReminders: vi.fn(),
+}));
+vi.mock("@calcom/features/reminders/lib/bookingReminderHooks", () => ({
+  scheduleBookingReminders,
+  cancelBookingReminders,
+}));
 
 export type CustomNextApiRequest = NextApiRequest & Request;
 
@@ -118,6 +127,8 @@ describe("Handler: requestReschedule", () => {
           },
         })
       );
+
+      expect(cancelBookingReminders).toHaveBeenCalledWith([bookingUid]);
 
       expectBookingRequestRescheduledEmails({
         booking: {

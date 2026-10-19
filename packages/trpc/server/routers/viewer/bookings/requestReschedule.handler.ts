@@ -1,3 +1,4 @@
+import { cancelBookingReminders } from "@calcom/features/reminders/lib/bookingReminderHooks";
 import { getCalendar } from "@calcom/app-store/_utils/getCalendar";
 import {
   getDelegationCredentialOrRegularCredential,
@@ -89,6 +90,7 @@ export const requestRescheduleHandler = async ({ ctx, input, source }: RequestRe
   const webhookPromises = [];
   webhookPromises.push(deleteWebhookScheduledTriggers({ booking: bookingToReschedule }));
   webhookPromises.push(cancelNoShowTasksForBooking({ bookingUid: bookingToReschedule.uid }));
+  webhookPromises.push(cancelBookingReminders([bookingToReschedule.uid]));
 
   await Promise.all(webhookPromises).catch((error) => {
     log.error("Error while deleting scheduled webhook triggers", JSON.stringify({ error }));

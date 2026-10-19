@@ -1,4 +1,5 @@
 import { bindModuleToClassOnToken, createModule, type ModuleLoader } from "@calcom/features/di/di";
+import { moduleLoader as bookingRepositoryModuleLoader } from "@calcom/features/di/modules/Booking";
 import { ReminderSchedulerService } from "../services/ReminderSchedulerService";
 import { moduleLoader as eventTypeReminderRepositoryModuleLoader } from "./EventTypeReminderRepository.module";
 import { moduleLoader as reminderTaskRepositoryModuleLoader } from "./ReminderTaskRepository.module";
@@ -13,6 +14,7 @@ const loadModule = bindModuleToClassOnToken({
   token,
   classs: ReminderSchedulerService,
   depsMap: {
+    bookingRepository: bookingRepositoryModuleLoader,
     eventTypeReminderRepository: eventTypeReminderRepositoryModuleLoader,
     reminderTaskRepository: reminderTaskRepositoryModuleLoader,
   },

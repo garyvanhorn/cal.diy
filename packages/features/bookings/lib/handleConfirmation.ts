@@ -19,6 +19,7 @@ import { EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
 import type { AdditionalInformation, CalendarEvent } from "@calcom/types/Calendar";
 import { getCalEventResponses } from "./getCalEventResponses";
 import { scheduleNoShowTriggers } from "./handleNewBooking/scheduleNoShowTriggers";
+import { scheduleBookingReminders } from "@calcom/features/reminders/lib/bookingReminderHooks";
 
 export async function handleConfirmation(args: {
   user: EventManagerUser & { username: string | null };
@@ -307,6 +308,8 @@ export async function handleConfirmation(args: {
       },
     ];
   }
+
+  await scheduleBookingReminders(updatedBookings.map((updatedBooking) => updatedBooking.uid));
 
   const triggerForUser = true;
   const userId = booking.userId;
