@@ -6,12 +6,21 @@ import type { PageProps } from "app/_types";
 import { getTranslate } from "app/_utils";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { robots: { index: false, follow: false } };
+export const generateMetadata = async (): Promise<Metadata> => {
+  const t = await getTranslate();
+  return { title: t("confirm_attendance_title"), robots: { index: false, follow: false } };
+};
 
 function formatWhen(details: AttendanceConfirmationDetails): string {
+  // dateStyle/timeStyle can't be combined with timeZoneName, so the parts are spelled out.
   return new Intl.DateTimeFormat(details.locale ?? "en", {
-    dateStyle: "full",
-    timeStyle: "short",
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZoneName: "short",
     timeZone: details.timeZone,
   }).format(details.startTime);
 }

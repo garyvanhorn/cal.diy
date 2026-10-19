@@ -10,7 +10,7 @@ class TestAttendeeReminderEmail extends AttendeeReminderEmail {
 }
 
 const t = ((key: string, vars?: Record<string, unknown>) => {
-  if (key === "reminder_email") return `Reminder: ${vars?.eventType} with ${vars?.name} at ${vars?.date}`;
+  if (key === "attendee_reminder_subject") return `Reminder: ${vars?.title} on ${vars?.date}`;
   return key;
 }) as unknown as TFunction;
 
@@ -38,9 +38,8 @@ describe("AttendeeReminderEmail", () => {
     const payload = await new TestAttendeeReminderEmail(calEvent, attendee, confirmUrl).getPayload();
 
     expect(payload.to).toBe("Guest <guest@example.com>");
-    expect(payload.subject).toBe(
-      "Reminder: Consultation with Dana at 9:00am - 9:30am, monday, november 2, 2026"
-    );
+    expect(payload.subject).toBe("Reminder: Consultation on 9:00am - 9:30am, monday, november 2, 2026");
+    expect(payload.html).toContain("<title>attendee_reminder_title</title>");
     expect(payload.html).toContain(confirmUrl.replace("&", "&amp;"));
     expect(payload.html).toContain("confirm_attendance");
     expect(payload.html).toContain("https://book.client.example/reschedule/booking-uid");
