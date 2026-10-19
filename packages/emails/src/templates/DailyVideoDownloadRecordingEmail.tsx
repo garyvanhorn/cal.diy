@@ -1,8 +1,6 @@
+import { APP_NAME, COMPANY_NAME, WEBAPP_URL } from "@calcom/lib/constants";
 import type { TFunction } from "i18next";
-
-import { WEBAPP_URL, APP_NAME, COMPANY_NAME } from "@calcom/lib/constants";
-
-import { V2BaseEmailHtml, CallToAction } from "../components";
+import { CallToAction, V2BaseEmailHtml } from "../components";
 
 interface DailyVideoDownloadRecordingEmailProps {
   language: TFunction;
@@ -22,7 +20,7 @@ export const DailyVideoDownloadRecordingEmail = (
         title: props.title,
         date: props.date,
       })}>
-      <div style={{ width: "89px", marginBottom: "35px" }}>
+      <div style={{ width: "76px", marginBottom: "35px" }}>
         <a href={WEBAPP_URL} target="_blank" rel="noreferrer">
           <img
             height="19"
@@ -36,7 +34,7 @@ export const DailyVideoDownloadRecordingEmail = (
               width: "100%",
               fontSize: "13px",
             }}
-            width="89"
+            width="76"
             alt=""
           />
         </a>
