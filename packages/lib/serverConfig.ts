@@ -1,23 +1,18 @@
+import process from "node:process";
+import { isENVDev } from "@calcom/lib/env";
+import type { Transport } from "nodemailer";
 import type SendmailTransport from "nodemailer/lib/sendmail-transport";
 import type SMTPConnection from "nodemailer/lib/smtp-connection";
-
-import { isENVDev } from "@calcom/lib/env";
-
 import { getAdditionalEmailHeaders } from "./getAdditionalEmailHeaders";
+import { createResendApiTransport, type ResendSentMessageInfo } from "./resendApiTransport";
 
-function detectTransport(): SendmailTransport.Options | SMTPConnection.Options | string {
+function detectTransport():
+  | SendmailTransport.Options
+  | SMTPConnection.Options
+  | Transport<ResendSentMessageInfo | null>
+  | string {
   if (process.env.RESEND_API_KEY) {
-    const transport = {
-      host: "smtp.resend.com",
-      secure: true,
-      port: 465,
-      auth: {
-        user: "resend",
-        pass: process.env.RESEND_API_KEY,
-      },
-    };
-
-    return transport;
+    return createResendApiTransport(process.env.RESEND_API_KEY);
   }
 
   if (process.env.EMAIL_SERVER) {
