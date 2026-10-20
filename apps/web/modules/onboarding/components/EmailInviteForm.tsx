@@ -72,7 +72,7 @@ export function EmailInviteForm({
                 <TextField
                   labelSrOnly
                   {...register(`invites.${index}.email`)}
-                  placeholder={emailPlaceholder || `rick@cal.com`}
+                  placeholder={emailPlaceholder || t("email_placeholder")}
                   type="email"
                   size="sm"
                 />

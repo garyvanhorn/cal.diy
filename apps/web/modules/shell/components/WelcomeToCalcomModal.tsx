@@ -1,6 +1,6 @@
 "use client";
 
-import { APP_NAME } from "@calcom/lib/constants";
+import { APP_NAME, WEBSITE_URL } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { Button } from "@calcom/ui/components/button";
 import { Dialog, DialogContent } from "@calcom/ui/components/dialog";
@@ -99,7 +99,7 @@ export function WelcomeToCalcomModal() {
         <div className="bg-muted border-subtle flex shrink-0 items-center justify-between rounded-b-2xl border-t px-8 py-6">
           <Button
             color="minimal"
-            href="https://cal.diy"
+            href={WEBSITE_URL}
             target="_blank"
             EndIcon="external-link"
             className="pointer-events-none opacity-0">
