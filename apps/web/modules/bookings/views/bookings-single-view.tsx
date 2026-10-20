@@ -1136,14 +1136,6 @@ export default function Success(props: PageProps) {
                   message={
                     <div>
                       <p className="font-semibold">{t("google_new_spam_policy")}</p>
-                      <span className="underline">
-                        <a
-                          target="_blank"
-                          href="https://cal.com/blog/google-s-new-spam-policy-may-be-affecting-your-invitations"
-                          rel="noreferrer">
-                          {t("resolve")}
-                        </a>
-                      </span>
                     </div>
                   }
                   CustomIcon="circle-alert"

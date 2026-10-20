@@ -16,6 +16,7 @@ import {
   IS_CALCOM,
   URL_PROTOCOL_REGEX,
   WEBAPP_URL,
+  HAS_LEGAL_URLS,
   WEBSITE_PRIVACY_POLICY_URL,
   WEBSITE_TERMS_URL,
   WEBSITE_URL,
@@ -737,29 +738,31 @@ export default function Signup({
                         {t("sign_in")}
                       </Link>
                     </div>
-                    <div className="text-subtle">
-                      <ServerTrans
-                        t={t}
-                        i18nKey="signing_up_terms"
-                        values={{ appName: APP_NAME }}
-                        components={[
-                          <Link
-                            className="text-emphasis hover:underline"
-                            key="terms"
-                            href={`${WEBSITE_TERMS_URL}`}
-                            target="_blank">
-                            Terms
-                          </Link>,
-                          <Link
-                            className="text-emphasis hover:underline"
-                            key="privacy"
-                            href={`${WEBSITE_PRIVACY_POLICY_URL}`}
-                            target="_blank">
-                            Privacy Policy.
-                          </Link>,
-                        ]}
-                      />
-                    </div>
+                    {HAS_LEGAL_URLS && (
+                      <div className="text-subtle">
+                        <ServerTrans
+                          t={t}
+                          i18nKey="signing_up_terms"
+                          values={{ appName: APP_NAME }}
+                          components={[
+                            <Link
+                              className="text-emphasis hover:underline"
+                              key="terms"
+                              href={`${WEBSITE_TERMS_URL}`}
+                              target="_blank">
+                              Terms
+                            </Link>,
+                            <Link
+                              className="text-emphasis hover:underline"
+                              key="privacy"
+                              href={`${WEBSITE_PRIVACY_POLICY_URL}`}
+                              target="_blank">
+                              Privacy Policy.
+                            </Link>,
+                          ]}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </>

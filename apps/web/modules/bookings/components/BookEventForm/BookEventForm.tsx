@@ -6,7 +6,12 @@ import type { UseBookingFormReturnType } from "@calcom/features/bookings/Booker/
 import { formatEventFromTime } from "@calcom/features/bookings/Booker/utils/dates";
 import type { BookerEvent } from "@calcom/features/bookings/types";
 import ServerTrans from "@calcom/lib/components/ServerTrans";
-import { APP_NAME, WEBSITE_PRIVACY_POLICY_URL, WEBSITE_TERMS_URL } from "@calcom/lib/constants";
+import {
+  APP_NAME,
+  HAS_LEGAL_URLS,
+  WEBSITE_PRIVACY_POLICY_URL,
+  WEBSITE_TERMS_URL,
+} from "@calcom/lib/constants";
 import { ErrorCode } from "@calcom/lib/errorCodes";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import type { TimeFormat } from "@calcom/lib/timeFormat";
@@ -174,7 +179,7 @@ export const BookEventForm = ({
           </div>
         ) : null}
 
-        {!isPlatform && (
+        {!isPlatform && HAS_LEGAL_URLS && (
           <div className="my-3 w-full text-xs text-subtle">
             <ServerTrans
               t={t}
@@ -200,7 +205,7 @@ export const BookEventForm = ({
           </div>
         )}
 
-        {isPlatformBookerEmbed && (
+        {isPlatformBookerEmbed && HAS_LEGAL_URLS && (
           <div className="my-3 w-full text-xs text-subtle">
             {t("proceeding_agreement")}{" "}
             <Link

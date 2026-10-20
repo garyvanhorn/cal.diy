@@ -36,7 +36,7 @@ import {
   ListItemTitle,
   ListItemTitleLink,
 } from "@coss/ui/shared/list-item";
-import { EllipsisIcon, ExternalLinkIcon, PencilIcon, TrashIcon, WebhookIcon } from "@coss/ui/icons";
+import { EllipsisIcon, PencilIcon, TrashIcon, WebhookIcon } from "@coss/ui/icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { DeleteWebhookDialog } from "./dialogs/DeleteWebhookDialog";
@@ -133,25 +133,6 @@ export default function WebhookListItem(props: {
                       {getWebhookVersionLabel(webhook.version)}
                     </TooltipTrigger>
                     <TooltipPopup>{t("webhook_version")}</TooltipPopup>
-                  </Tooltip>
-                  <Tooltip>
-                    <TooltipTrigger
-                      render={
-                        <a
-                          className="relative flex h-5 items-center justify-center px-2 sm:h-4.5"
-                          href={`https://cal.com/docs/developing/guides/automation/webhooks#${webhook.version}`}
-                          rel="noopener noreferrer"
-                          target="_blank"
-                        />
-                      }>
-                      <span className="sr-only">{t("webhook_version_docs")}</span>
-                      <ExternalLinkIcon aria-hidden="true" className="size-3.5 shrink-0 sm:size-3" />
-                    </TooltipTrigger>
-                    <TooltipPopup>
-                      {t("webhook_version_docs", {
-                        version: getWebhookVersionLabel(webhook.version),
-                      })}
-                    </TooltipPopup>
                   </Tooltip>
                 </TooltipProvider>
               </div>
