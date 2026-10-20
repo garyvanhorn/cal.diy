@@ -3,7 +3,7 @@
  * This file is deprecated. The only use of this file is to seed the database for E2E tests. Each test should take care of seeding it's own data going forward.
  */
 import dotEnv from "dotenv";
-import path from "node:path"
+import path from "node:path";
 
 import { appStoreMetadata } from "@calcom/app-store/appStoreMetaData";
 import { shouldEnableApp } from "@calcom/app-store/_utils/validateAppKeys";
@@ -13,6 +13,42 @@ import { AppCategories } from "@calcom/prisma/enums";
 
 dotEnv.config({ path: path.resolve(__dirname, "../.env") });
 dotEnv.config({ path: path.resolve(__dirname, "../.env.appStore") });
+
+// These integrations are built against Cal.com's hosted service (its API, Zapier/Make apps, embed
+// script or sales offerings) and can't connect to this deployment. Seeding runs on every boot, so they
+// are kept disabled here rather than in a one-off migration that the next seed would undo.
+const CAL_HOSTED_ONLY_APP_DIRS = new Set([
+  "amie",
+  "autocheckin",
+  "baa-for-hipaa",
+  "bolna",
+  "caretta",
+  "chatbase",
+  "clara",
+  "clic",
+  "cron",
+  "deel",
+  "elevenlabs",
+  "famulor",
+  "fonio-ai",
+  "framer",
+  "granola",
+  "greetmate-ai",
+  "intercom",
+  "lindy",
+  "make",
+  "millis-ai",
+  "monobot",
+  "n8n",
+  "pipedream",
+  "raycast",
+  "retell-ai",
+  "synthflow",
+  "telli",
+  "vimcal",
+  "wordpress",
+  "zapier",
+]);
 
 async function createApp(
   /** The App identifier in the DB also used for public page in `/apps/[slug]` */
@@ -51,7 +87,7 @@ async function createApp(
 
     // Only enable apps if they have valid keys (or don't require keys)
     const keysToValidate = (keys ?? foundApp?.keys) as Prisma.JsonValue | undefined;
-    const enabled = shouldEnableApp(dirName, keysToValidate);
+    const enabled = !CAL_HOSTED_ONLY_APP_DIRS.has(dirName) && shouldEnableApp(dirName, keysToValidate);
     const data = {
       slug,
       dirName,
