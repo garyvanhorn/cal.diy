@@ -9,27 +9,25 @@ vi.mock("@calcom/lib/constants", async () => {
   return {
     ...actual,
     CALCOM_VERSION: "mockedVersion",
+    COMPANY_NAME: "GVX Digital",
   };
 });
 
 describe("Tests for Credits component", () => {
-  test("Should render credits section with links", () => {
+  test("Should render company name and version without upstream links", () => {
     render(<Credits />);
 
-    const creditsLinkElement = screen.getByRole("link", { name: /Cal\.com, Inc\./i });
-    expect(creditsLinkElement).toBeInTheDocument();
-    expect(creditsLinkElement).toHaveAttribute("href", "https://go.cal.com/credits");
-
-    const versionLinkElement = screen.getByRole("link", { name: /mockedVersion/i });
-    expect(versionLinkElement).toBeInTheDocument();
-    expect(versionLinkElement).toHaveAttribute("href", "https://go.cal.com/releases");
+    expect(screen.getByText(/GVX Digital/)).toBeInTheDocument();
+    expect(screen.getByText(/mockedVersion/)).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /GVX Digital/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /mockedVersion/ })).not.toBeInTheDocument();
   });
 
   test("Should render credits section with correct text", () => {
     render(<Credits />);
 
     const currentYear = new Date().getFullYear();
-    const copyrightElement = screen.getByText(`© ${currentYear}`);
+    const copyrightElement = screen.getByText(new RegExp(`© ${currentYear}`));
     expect(copyrightElement).toHaveTextContent(`${currentYear}`);
   });
 });
