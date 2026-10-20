@@ -8,9 +8,7 @@ items:
 
 {DESCRIPTION}
 
-Introducing the official Cal.diy component, now available in the Insert Panel under Forms. 
-
-Cal is a fully customizable scheduling software for individuals, businesses taking calls, and developers building scheduling platforms. 
+Introducing the booking component, now available in the Insert Panel under Forms. 
 
 We’ve collaborated with the team to make it incredibly easy to let people schedule meetings via your Framer site. 
 
