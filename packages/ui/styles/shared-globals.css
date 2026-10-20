@@ -1,6 +1,8 @@
 @font-face {
-  font-family: "Cal Sans";
-  src: url("/fonts/cal.ttf");
+  font-family: "Saira";
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/saira-semibold.ttf") format("truetype");
 }
 
 @font-face {

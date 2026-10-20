@@ -3,8 +3,7 @@ import { loadTranslations } from "@calcom/i18n/server";
 import { IconSprites } from "@calcom/ui/components/icon";
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 import { dir } from "i18next";
-import { Inter } from "next/font/google";
-import localFont from "next/font/local";
+import { Inter, Saira } from "next/font/google";
 import { cookies, headers } from "next/headers";
 import Script from "next/script";
 import type React from "react";
@@ -15,8 +14,8 @@ import { Providers } from "./providers";
 import { SpeculationRules } from "./SpeculationRules";
 
 const interFont = Inter({ subsets: ["latin"], variable: "--font-sans", preload: true, display: "swap" });
-const calFont = localFont({
-  src: "../fonts/CalSans-SemiBold.woff2",
+const calFont = Saira({
+  subsets: ["latin"],
   variable: "--font-cal",
   preload: true,
   display: "block",
