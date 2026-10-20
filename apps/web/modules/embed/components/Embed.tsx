@@ -1048,7 +1048,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
                             };
                           });
                         }}
-                        defaultValue={t("book_my_cal")}
+                        defaultValue={t("book_now")}
                         required
                       />
                     </div>

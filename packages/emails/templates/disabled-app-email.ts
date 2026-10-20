@@ -1,6 +1,6 @@
 import type { TFunction } from "i18next";
 
-import { EMAIL_FROM_NAME } from "@calcom/lib/constants";
+import { APP_NAME, EMAIL_FROM_NAME } from "@calcom/lib/constants";
 
 import renderEmail from "../src/renderEmail";
 import BaseEmail from "./_base-email";
@@ -53,7 +53,7 @@ export default class DisabledAppEmail extends BaseEmail {
     return this.appType.some((type) => type === "payment")
       ? this.t("disable_payment_app", { appName: this.appName, title: this.title })
       : this.appType.some((type) => type === "video")
-        ? this.t("app_disabled_video", { appName: this.appName })
+        ? this.t("app_disabled_video", { appName: this.appName, brandName: APP_NAME })
         : this.t("app_disabled", { appName: this.appName });
   }
 }

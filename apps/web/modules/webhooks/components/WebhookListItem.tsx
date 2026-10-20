@@ -2,6 +2,7 @@
 
 import { getWebhookVersionLabel } from "@calcom/features/webhooks/lib/constants";
 import type { Webhook } from "@calcom/features/webhooks/lib/dto/types";
+import { APP_NAME } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { trpc } from "@calcom/trpc/react";
 import { revalidateEventTypeEditPage } from "@calcom/web/app/(use-page-wrapper)/event-types/[type]/actions";
@@ -161,7 +162,7 @@ export default function WebhookListItem(props: {
           {webhook.eventTriggers.slice(0, badgesExpanded ? undefined : MAX_BADGES_TWO_ROWS).map((trigger) => (
             <Badge key={trigger} variant="outline" className="pointer-events-none">
               <WebhookIcon />
-              {t(`${trigger.toLowerCase()}`)}
+              {t(`${trigger.toLowerCase()}`, { appName: APP_NAME })}
             </Badge>
           ))}
           {!badgesExpanded && webhook.eventTriggers.length > MAX_BADGES_TWO_ROWS && (

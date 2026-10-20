@@ -1,6 +1,6 @@
 import type { TFunction } from "i18next";
 
-import { WEBAPP_URL } from "@calcom/lib/constants";
+import { APP_NAME, WEBAPP_URL } from "@calcom/lib/constants";
 
 import { BaseEmailHtml, CallToAction } from "../components";
 
@@ -49,7 +49,7 @@ export const DisabledAppEmail = (
       ) : appType.some((type) => type === "video") ? (
         <>
           <p>
-            <>{t("app_disabled_video", { appName: appName })}</>
+            <>{t("app_disabled_video", { appName: appName, brandName: APP_NAME })}</>
           </p>
 
           <hr style={{ marginBottom: "24px" }} />

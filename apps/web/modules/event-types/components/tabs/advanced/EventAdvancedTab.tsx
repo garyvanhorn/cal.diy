@@ -766,10 +766,10 @@ export const EventAdvancedTab = ({
               "border-subtle rounded-lg border py-6 px-4 sm:px-6",
               customClassNames?.canSendCalVideoTranscriptionEmails?.container
             )}
-            title={t("send_cal_video_transcription_emails")}
+            title={t("send_cal_video_transcription_emails", { appName: APP_NAME })}
             data-testid="send-cal-video-transcription-emails"
             {...sendCalVideoTranscriptionEmailsProps}
-            description={t("description_send_cal_video_transcription_emails")}
+            description={t("description_send_cal_video_transcription_emails", { appName: APP_NAME })}
             descriptionClassName={customClassNames?.canSendCalVideoTranscriptionEmails?.description}
             checked={value}
             onCheckedChange={(e) => onChange(e)}

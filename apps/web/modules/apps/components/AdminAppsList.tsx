@@ -4,6 +4,7 @@ import AppCategoryNavigation from "@calcom/app-store/_components/AppCategoryNavi
 import { appKeysSchemas } from "@calcom/app-store/apps.keys-schemas.generated";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
+import { APP_NAME } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { AppCategories } from "@calcom/prisma/enums";
 import type { RouterOutputs } from "@calcom/trpc/react";
@@ -116,7 +117,7 @@ const IntegrationContainer = ({
           onConfirm={() => {
             enableAppMutation.mutate({ slug: app.slug, enabled: !app.enabled });
           }}>
-          {t("disable_app_description")}
+          {t("disable_app_description", { appName: APP_NAME })}
         </ConfirmationDialogContent>
       </Dialog>
     </li>
