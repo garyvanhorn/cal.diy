@@ -283,7 +283,7 @@ function HitPaySetupPage(props: IHitPaySetupProps) {
               ) : (
                 <div className="flex justify-end gap-4">
                   <Link href="/apps/hitpay" className="inline-block">
-                    <Button color="secondary">Go to App Store</Button>
+                    <Button color="secondary">Go to Integrations</Button>
                   </Link>
                   <Button color="primary" type="submit" disabled={!updatable}>
                     Update

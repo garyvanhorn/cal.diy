@@ -335,7 +335,7 @@ function BTCPaySetupPage(props: IBTCPaySetupProps) {
                 ) : (
                   <>
                     <Link href="/apps/btcpayserver" className="inline-block">
-                      <Button color="secondary">Go to App Store</Button>
+                      <Button color="secondary">Go to Integrations</Button>
                     </Link>
                   </>
                 )}
