@@ -16,6 +16,7 @@ import type {
   SettingsToggleClassNames,
 } from "@calcom/features/eventtypes/lib/types";
 import {
+  APP_NAME,
   DEFAULT_DARK_BRAND_COLOR,
   DEFAULT_LIGHT_BRAND_COLOR,
   MAX_SEATS_PER_TIME_SLOT,
@@ -669,7 +670,9 @@ export const EventAdvancedTab = ({
       {!isPlatform && (
         <Controller
           name="requiresCancellationReason"
-          defaultValue={eventType.requiresCancellationReason ?? CancellationReasonRequirement.MANDATORY_HOST_ONLY}
+          defaultValue={
+            eventType.requiresCancellationReason ?? CancellationReasonRequirement.MANDATORY_HOST_ONLY
+          }
           render={({ field: { value, onChange } }) => {
             const cancellationReasonOptions = [
               { value: CancellationReasonRequirement.MANDATORY_BOTH, label: t("mandatory_for_both") },
@@ -783,7 +786,7 @@ export const EventAdvancedTab = ({
               checked={value}
               onCheckedChange={(e) => onChange(e)}
               disabled={!orgId}
-              tooltip={!orgId ? t("orgs_upgrade_to_enable_feature") : undefined}
+              tooltip={!orgId ? t("orgs_upgrade_to_enable_feature", { appName: APP_NAME }) : undefined}
               data-testid="ai_translation_toggle"
               toggleSwitchAtTheEnd={true}
               switchContainerClassName="border-subtle rounded-lg border py-6 px-4 sm:px-6"

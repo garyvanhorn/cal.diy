@@ -3,6 +3,7 @@ import type { EventTypeAppCardComponentProps } from "@calcom/app-store/types";
 import type { EventTypeAppsList } from "@calcom/app-store/utils";
 import type { EventTypeApps, EventTypeSetupProps, FormValues } from "@calcom/features/eventtypes/lib/types";
 import ServerTrans from "@calcom/lib/components/ServerTrans";
+import { APP_NAME } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { trpc } from "@calcom/trpc/react";
 import { Alert } from "@calcom/ui/components/alert";
@@ -135,7 +136,7 @@ export const EventAppsTab = ({
             <EmptyScreen
               Icon="grid-3x3"
               headline={t("empty_installed_apps_headline")}
-              description={t("empty_installed_apps_description")}
+              description={t("empty_installed_apps_description", { appName: APP_NAME })}
               buttonRaw={
                 appsDisableProps.disabled ? (
                   <Button StartIcon="lock" color="secondary" disabled>
