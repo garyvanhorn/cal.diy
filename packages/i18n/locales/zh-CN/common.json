@@ -1285,7 +1285,7 @@
   "apps_description": "在此处可以找到您应用的列表",
   "apps_listing": "应用列表",
   "category_apps": "{{category}}应用",
-  "app_store": "应用商店",
+  "app_store": "集成",
   "app_store_description": "连接人员、技术和工作场所。",
   "connect_your_video": "连接您的视频会议应用",
   "settings": "设置",

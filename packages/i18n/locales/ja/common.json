@@ -1330,7 +1330,7 @@
   "apps_description": "ここにはアプリの一覧が表示されます",
   "apps_listing": "アプリ一覧",
   "category_apps": "{{category}} アプリ",
-  "app_store": "アプリストア",
+  "app_store": "連携",
   "app_store_description": "人とテクノロジーと職場をつなぐ。",
   "connect_your_video": "ビデオ会議アプリを接続する",
   "settings": "設定",
