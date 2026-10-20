@@ -2,19 +2,14 @@
 @import "@coss/ui/styles.css";
 @import "../../../config/theme/tokens.css";
 
-@font-face {
-  font-family: "Cal Sans";
-  src: url("https://cal.com/cal.ttf");
-}
-
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: "Cal Sans";
-  font-weight: normal;
+  font-family: "Saira", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
   letter-spacing: normal;
 }
 
