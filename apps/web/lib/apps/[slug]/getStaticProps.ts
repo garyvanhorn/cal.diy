@@ -10,6 +10,8 @@ import { IS_PRODUCTION } from "@calcom/lib/constants";
 import { prisma } from "@calcom/prisma";
 import logger from "@calcom/lib/logger";
 
+import { withInstanceBranding } from "./withInstanceBranding";
+
 const log = logger.getSubLogger({ prefix: ["lib", "parseFrontmatter"] });
 
 const FRONTMATTER_REGEX = /^---[ \t]*\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n|$)/;
@@ -82,7 +84,7 @@ export const getStaticProps = async (slug: string) => {
     return {
       isAppDisabled: true as const,
       data: {
-        ...appMeta,
+        ...withInstanceBranding(appMeta),
       },
     };
   }
@@ -120,6 +122,6 @@ export const getStaticProps = async (slug: string) => {
   return {
     isAppDisabled: false as const,
     source: { content, data },
-    data: appMeta,
+    data: withInstanceBranding(appMeta),
   };
 };
