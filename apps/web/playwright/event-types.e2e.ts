@@ -1,4 +1,4 @@
-import { WEBAPP_URL } from "@calcom/lib/constants";
+import { APP_NAME, WEBAPP_URL } from "@calcom/lib/constants";
 import { randomString } from "@calcom/lib/random";
 import type { Page } from "@playwright/test";
 import { expect } from "@playwright/test";
@@ -243,7 +243,7 @@ test.describe("Event Types tests", () => {
         await gotoFirstEventType(page);
 
         await page.getByTestId("location-select").click();
-        await page.locator(`text="Cal Video (Default)"`).click();
+        await page.locator(`text="${APP_NAME} Video (Default)"`).click();
 
         await saveEventType(page);
         await gotoBookingPage(page);
@@ -252,7 +252,7 @@ test.describe("Event Types tests", () => {
         await bookTimeSlot(page);
 
         await expect(page.locator("[data-testid=success-page]")).toBeVisible();
-        await expect(page.locator("[data-testid=where] ")).toContainText("Cal Video");
+        await expect(page.locator("[data-testid=where] ")).toContainText(`${APP_NAME} Video`);
       });
 
       test("Can add Link Meeting as location and book with it", async ({ page }) => {
@@ -284,8 +284,8 @@ test.describe("Event Types tests", () => {
         // Add Attendee Phone Number location
         await selectAttendeePhoneNumber(page);
 
-        // Add Cal Video location
-        await addAnotherLocation(page, "Cal Video (Default)");
+        // Add the built-in video location
+        await addAnotherLocation(page, `${APP_NAME} Video (Default)`);
 
         await saveEventType(page);
 
@@ -301,7 +301,7 @@ test.describe("Event Types tests", () => {
         await bookTimeSlot(page);
 
         await expect(page.locator("[data-testid=success-page]")).toBeVisible();
-        await expect(page.locator("[data-testid=where]")).toHaveText(/Cal Video/);
+        await expect(page.locator("[data-testid=where]")).toHaveText(new RegExp(`${APP_NAME} Video`));
       });
 
       test("can add single organizer address location without display location public option", async ({

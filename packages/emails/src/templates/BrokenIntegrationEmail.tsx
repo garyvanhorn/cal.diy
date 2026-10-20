@@ -2,7 +2,7 @@ import type { TFunction } from "i18next";
 
 import { AppStoreLocationType } from "@calcom/app-store/locations";
 import ServerTrans from "@calcom/lib/components/ServerTrans";
-import { WEBAPP_URL } from "@calcom/lib/constants";
+import { APP_NAME, WEBAPP_URL } from "@calcom/lib/constants";
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
 
 import { BaseScheduledEmail } from "./BaseScheduledEmail";
@@ -72,7 +72,7 @@ export const BrokenIntegrationEmail = (
   if (type === "video") {
     let location = calEvent.location ? getEnumKeyByEnumValue(AppStoreLocationType, calEvent.location) : " ";
     if (location === "Daily") {
-      location = "Cal Video";
+      location = `${APP_NAME} Video`;
     }
     if (location === "GoogleMeet") {
       location = `${location.slice(0, 5)} ${location.slice(5)}`;
