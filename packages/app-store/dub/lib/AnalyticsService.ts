@@ -1,3 +1,4 @@
+import { APP_NAME } from "@calcom/lib/constants";
 import { Dub } from "dub-package";
 
 import { CredentialRepository } from "@calcom/features/credentials/repositories/CredentialRepository";
@@ -116,7 +117,7 @@ class DubService implements AnalyticsService {
       customerName: name,
       customerEmail: email,
       externalId: externalId ?? email,
-      eventName: eventName ?? "Cal.diy lead",
+      eventName: eventName ?? `${APP_NAME} lead`,
     });
   }
 }

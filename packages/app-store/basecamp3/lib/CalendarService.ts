@@ -1,3 +1,4 @@
+import { APP_NAME } from "@calcom/lib/constants";
 import logger from "@calcom/lib/logger";
 import prisma from "@calcom/prisma";
 import type {
@@ -117,7 +118,7 @@ class BasecampCalendarService implements Calendar {
           },
           body: JSON.stringify({
             description,
-            summary: `Cal.diy: ${event.title}`,
+            summary: `${APP_NAME}: ${event.title}`,
             starts_at: new Date(event.startTime).toISOString(),
             ends_at: new Date(event.endTime).toISOString(),
           }),
@@ -160,7 +161,7 @@ class BasecampCalendarService implements Calendar {
           },
           body: JSON.stringify({
             description,
-            summary: `Cal.diy: ${event.title}`,
+            summary: `${APP_NAME}: ${event.title}`,
             starts_at: new Date(event.startTime).toISOString(),
             ends_at: new Date(event.endTime).toISOString(),
           }),
