@@ -50,7 +50,7 @@ export const OptionComponent = <
         <span className="w-full" data-testid={`select-option-${(props as unknown as ExtendedOption).value}`}>
           {(props.data as unknown as ExtendedOption).isCalAi ? (
             <Badge startIcon="sparkles" variant="purple" className="mr-1 hidden md:inline-flex">
-              Cal.ai
+              AI
             </Badge>
           ) : (
             <></>

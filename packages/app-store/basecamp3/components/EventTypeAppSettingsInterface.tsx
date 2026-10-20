@@ -1,3 +1,4 @@
+import { APP_NAME } from "@calcom/lib/constants";
 import { useState, useEffect } from "react";
 
 import type { EventTypeAppSettingsComponent } from "@calcom/app-store/types";
@@ -60,7 +61,7 @@ const EventTypeAppSettingsInterface: EventTypeAppSettingsComponent = () => {
       </div>
       <div className="mt-2">
         Please note that as of now you can only link <span className="italic">one</span> of your projects to
-        cal.com
+        {APP_NAME}
       </div>
     </div>
   );
