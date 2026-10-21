@@ -76,3 +76,14 @@ export const paymentDataSelect = {
     },
   },
 } satisfies Prisma.PaymentSelect;
+
+export const paymentPageSelect = {
+  ...paymentDataSelect,
+  id: true,
+  booking: {
+    select: {
+      ...paymentDataSelect.booking.select,
+      paid: true,
+    },
+  },
+} satisfies Prisma.PaymentSelect;
