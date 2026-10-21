@@ -2806,7 +2806,6 @@
   "messaging": "Mezularitza",
   "sender_id_info": "SMS-aren bidaltzaile gisa agertzen den izena edo zenbakia (herrialde batzuek ez dute onartzen bidaltzaile ID alfanumerikoak)",
   "org_admins_can_create_new_teams": "Zure erakundeko administratzaileak soilik sor ditzake talde berriak",
-  "google_new_spam_policy": "Google-ren spam politika berriak eragotzi dezake erreserba honi buruzko mezu elektronikoak eta egutegi-jakinarazpenak jasotzea.",
   "resolve": "Konpondu",
   "no_organization_slug": "Errore bat gertatu da erakunde honetarako taldeak sortzean. URL slug-a falta da.",
   "copy_link_org": "Kopiatu erakundearen esteka",

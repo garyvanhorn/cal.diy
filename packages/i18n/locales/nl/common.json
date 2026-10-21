@@ -2790,7 +2790,6 @@
   "messaging": "Berichten",
   "sender_id_info": "Naam of nummer weergegeven als de afzender van een sms (sommige landen staan geen alfanumerieke afzender-ID's toe)",
   "org_admins_can_create_new_teams": "Alleen de beheerder van uw organisatie kan nieuwe teams maken",
-  "google_new_spam_policy": "Google's nieuwe spambeleid kan voorkomen dat je e-mail- en agendameldingen over deze boeking ontvangt.",
   "resolve": "Oplossen",
   "no_organization_slug": "Er is een fout opgetreden bij het maken van teams voor deze organisatie. Ontbrekende URL-slug.",
   "copy_link_org": "Link kopiëren naar organisatie",

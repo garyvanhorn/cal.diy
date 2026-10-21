@@ -2741,7 +2741,6 @@
   "messaging": "Nhắn tin",
   "sender_id_info": "Tên hoặc số hiển thị ở chỗ người gửi SMS (một số quốc gia không cho phép ID người gửi dạng chữ lẫn số)",
   "org_admins_can_create_new_teams": "Chỉ quản trị viên của tổ chức mới tạo được nhóm mới",
-  "google_new_spam_policy": "Chính sách chống spam mới của Google có thể ngăn bạn nhận bất kỳ email và thông báo lịch nào về lịch hẹn này.",
   "resolve": "Giải quyết",
   "no_organization_slug": "Có lỗi khi tạo nhóm cho tổ chức này. Slug URL bị thiếu.",
   "copy_link_org": "Sao chép liên kết đến tổ chức",

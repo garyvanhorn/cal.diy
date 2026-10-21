@@ -2790,7 +2790,6 @@
   "messaging": "Správy",
   "sender_id_info": "Meno alebo číslo zobrazené ako odosielateľ SMS (niektoré krajiny nepovoľujú alfanumerické ID odosielateľa)",
   "org_admins_can_create_new_teams": "Iba administrátor vašej organizácie môže vytvárať nové tímy",
-  "google_new_spam_policy": "Nová politika Googlu proti spamu by vám mohla zabrániť v prijímaní e-mailových a kalendárových upozornení o tejto rezervácii.",
   "resolve": "Riešiť",
   "no_organization_slug": "Pri vytváraní tímov pre túto organizáciu došlo k chybe. Chýba URL slug.",
   "copy_link_org": "Kopírovať odkaz na organizáciu",

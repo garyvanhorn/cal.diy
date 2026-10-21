@@ -2741,7 +2741,6 @@
   "messaging": "傳訊",
   "sender_id_info": "顯示為簡訊傳送者的名稱或電話號碼 (部分國家/地區不允許英數字元的傳送者 ID)",
   "org_admins_can_create_new_teams": "只有組織管理員才能建立新團隊",
-  "google_new_spam_policy": "Google 的新垃圾郵件政策可能會阻止您接收有關此預約的任何電子郵件和行事曆通知。",
   "resolve": "解決",
   "no_organization_slug": "為此組織建立團隊時發生錯誤。缺少網址 slug。",
   "copy_link_org": "複製組織連結",

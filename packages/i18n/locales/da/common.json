@@ -2806,7 +2806,6 @@
   "messaging": "Beskeder",
   "sender_id_info": "Navn eller nummer vist som afsender af en SMS (nogle lande tillader ikke alfanumeriske afsender-ID'er)",
   "org_admins_can_create_new_teams": "Kun administratoren af din organisation kan oprette nye teams",
-  "google_new_spam_policy": "Googles nye spam-politik kan forhindre dig i at modtage e-mails og kalendernotifikationer om denne booking.",
   "resolve": "Løs",
   "no_organization_slug": "Der opstod en fejl ved oprettelse af teams for denne organisation. Mangler URL-slug.",
   "copy_link_org": "Kopiér link til organisation",

@@ -2806,7 +2806,6 @@
   "messaging": "Mensajería",
   "sender_id_info": "Nombre o número mostrado como el remitente de un SMS (algunos países no permiten IDs de remitente alfanuméricos)",
   "org_admins_can_create_new_teams": "Solo el administrador de tu organización puede crear nuevos equipos",
-  "google_new_spam_policy": "La nueva política de spam de Google podría impedir que recibas notificaciones por correo electrónico y calendario sobre esta reserva.",
   "resolve": "Resolver",
   "no_organization_slug": "Hubo un error al crear equipos para esta organización. Falta el slug de la URL.",
   "copy_link_org": "Copiar enlace a la organización",

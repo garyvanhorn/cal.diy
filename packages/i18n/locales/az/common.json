@@ -2806,7 +2806,6 @@
   "messaging": "Mesajlaşma",
   "sender_id_info": "SMS göndərən kimi göstərilən ad və ya nömrə (bəzi ölkələrdə alfasayısal göndərən ID-lərinə icazə verilmir)",
   "org_admins_can_create_new_teams": "Yalnız təşkilatınızın administratoru yeni komandalar yarada bilər",
-  "google_new_spam_policy": "Google-un yeni spam siyasəti bu rezervasiya haqqında hər hansı e-poçt və təqvim bildirişləri almanızın qarşısını ala bilər.",
   "resolve": "Həll et",
   "no_organization_slug": "Bu təşkilat üçün komandalar yaradılarkən səhv baş verdi. URL slug çatışmır.",
   "copy_link_org": "Təşkilatın linkini kopyalayın",

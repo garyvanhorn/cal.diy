@@ -2806,7 +2806,6 @@
   "messaging": "Viestintä",
   "sender_id_info": "Nimi tai numero, joka näkyy tekstiviestin lähettäjänä (kaikki maat eivät salli aakkosnumeerisia lähettäjätunnisteita)",
   "org_admins_can_create_new_teams": "Vain organisaatiosi järjestelmänvalvoja voi luoda uusia tiimejä",
-  "google_new_spam_policy": "Googlen uusi roskapostisuodatuskäytäntö saattaa estää sinua vastaanottamasta sähköposti- ja kalenterimuistutuksia tästä varauksesta.",
   "resolve": "Ratkaise",
   "no_organization_slug": "Tiimien luominen tälle organisaatiolle epäonnistui. URL-tunniste puuttuu.",
   "copy_link_org": "Kopioi linkki organisaatioon",

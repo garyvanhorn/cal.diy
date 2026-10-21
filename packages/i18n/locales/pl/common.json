@@ -2790,7 +2790,6 @@
   "messaging": "Obsługa wiadomości",
   "sender_id_info": "Nazwa lub numer wyświetlany jako nadawca wiadomości SMS (niektóre kraje nie zezwalają na alfanumeryczne identyfikatory nadawcy)",
   "org_admins_can_create_new_teams": "Tylko administrator Twojej organizacji może tworzyć nowe zespoły",
-  "google_new_spam_policy": "Nowa polityka spamu Google może uniemożliwić Ci otrzymywanie e-maili i powiadomień kalendarza dotyczących tej rezerwacji.",
   "resolve": "Rozwiąż problem",
   "no_organization_slug": "Podczas tworzenia zespołów tej organizacji wystąpił błąd. Brakujący slug adresu URL.",
   "copy_link_org": "Skopiuj link do organizacji",

@@ -2806,7 +2806,6 @@
   "messaging": "Nachrichten",
   "sender_id_info": "Name oder Nummer, welcher bzw. welche als Absender einer SMS angezeigt wird (einige Länder erlauben keine alphanumerischen Absender-IDs)",
   "org_admins_can_create_new_teams": "Nur der Administrator Ihrer Organization kann neue Teams erstellen",
-  "google_new_spam_policy": "Googles neue Spam-Richtlinie könnte verhindern, dass du E-Mail- und Kalenderbenachrichtigungen über diese Buchung erhältst.",
   "resolve": "Problem lösen",
   "no_organization_slug": "Beim Erstellen von Teams für diese Organization ist ein Fehler aufgetreten. URL-Slug fehlt.",
   "copy_link_org": "Link zur Organization kopieren",

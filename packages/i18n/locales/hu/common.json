@@ -2806,7 +2806,6 @@
   "messaging": "Üzenetküldés",
   "sender_id_info": "Az SMS feladójaként megjelenő név vagy szám (egyes országok nem engedélyezik az alfanumerikus feladóazonosítókat)",
   "org_admins_can_create_new_teams": "Csak a szervezet rendszergazdája hozhat létre új csapatokat",
-  "google_new_spam_policy": "A Google új spam-szabályzata megakadályozhatja, hogy e-mail és naptárértesítéseket kapj erről a foglalásról.",
   "resolve": "Megoldás",
   "no_organization_slug": "Hiba történt a szervezet csapatainak létrehozásakor. Hiányzó URL-cím.",
   "copy_link_org": "Link másolása a szervezethez",

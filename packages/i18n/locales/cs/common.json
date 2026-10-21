@@ -2806,7 +2806,6 @@
   "messaging": "Zasílání zpráv",
   "sender_id_info": "Jméno nebo číslo zobrazené jako odesílatel SMS (některé země nepovolují alfanumerické ID odesílatele)",
   "org_admins_can_create_new_teams": "Nové týmy může vytvářet pouze správce vaší organizace",
-  "google_new_spam_policy": "Nová politika Googlu proti spamu by vám mohla zabránit v přijímání e-mailových a kalendářových oznámení o této rezervaci.",
   "resolve": "Vyřešit",
   "no_organization_slug": "Při vytváření týmů pro tuto organizaci došlo k chybě. Chybějící slug adresy URL.",
   "copy_link_org": "Zkopírovat odkaz na organizaci",

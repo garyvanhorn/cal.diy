@@ -2765,7 +2765,6 @@
   "messaging": "Poruke",
   "sender_id_info": "Ime ili broj koji će biti prikazani kao pošiljalac SMS-a (neke zemlje ne dozvoljavaju alfanumeričke ID-ove pošiljaoca)",
   "org_admins_can_create_new_teams": "Samo administrator vaše ogranizacije može da kreira nove timove",
-  "google_new_spam_policy": "Nova Google politika o neželjenim porukama mogla bi da vas spreči da primite bilo kakva obaveštenja putem e-pošte i kalendara o ovom zakazivanju.",
   "resolve": "Kako rešiti taj problem",
   "no_organization_slug": "Desila se greška kod kreiranja timova za ovu organizaciju. Nedostaje URL slug.",
   "copy_link_org": "Kopiraj link do organizacije",
