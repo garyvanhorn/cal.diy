@@ -2806,7 +2806,6 @@
   "messaging": "Messagerie",
   "sender_id_info": "Nom ou numéro affiché comme expéditeur d'un SMS (certains pays n'autorisent pas les ID d'expéditeur alphanumériques)",
   "org_admins_can_create_new_teams": "Seul l'administrateur de votre organisation peut créer de nouvelles équipes",
-  "google_new_spam_policy": "La nouvelle politique anti-spam de Google pourrait vous empêcher de recevoir des notifications par e-mail et calendrier concernant cette réservation.",
   "resolve": "Résoudre",
   "no_organization_slug": "Une erreur s'est produite lors de la création des équipes pour cette organisation. Le slug du lien est manquant.",
   "copy_link_org": "Copier le lien vers l’organisation",

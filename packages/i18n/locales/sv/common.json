@@ -2741,7 +2741,6 @@
   "messaging": "Meddelanden",
   "sender_id_info": "Namn eller nummer som visas som avsändare av ett SMS (vissa länder tillåter inte alfanumeriska avsändar-ID:n)",
   "org_admins_can_create_new_teams": "Endast administratören för din organisation kan skapa nya team",
-  "google_new_spam_policy": "Googles nya skräppostpolicy kan förhindra att du får e-post och kalendernotifikationer om denna bokning.",
   "resolve": "Lös",
   "no_organization_slug": "Ett fel uppstod när team skapades för den här organisationen. URL-sluggen saknas.",
   "copy_link_org": "Kopiera länk till organisation",

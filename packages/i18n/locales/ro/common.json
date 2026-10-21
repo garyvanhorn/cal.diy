@@ -2806,7 +2806,6 @@
   "messaging": "Mesagerie",
   "sender_id_info": "Numele sau numărul afișat ca expeditor al unui SMS (unele țări nu permit ID-uri alfanumerice ale expeditorilor)",
   "org_admins_can_create_new_teams": "Numai administratorul organizației dvs. poate crea echipe noi",
-  "google_new_spam_policy": "Noua politică anti-spam a Google ar putea împiedica primirea oricăror notificări prin e-mail și calendar despre această rezervare.",
   "resolve": "Rezolvați",
   "no_organization_slug": "A survenit o eroare la crearea echipelor pentru această organizație. Slug URL lipsă.",
   "copy_link_org": "Copiați linkul către organizație",

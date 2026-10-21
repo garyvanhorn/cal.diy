@@ -2806,7 +2806,6 @@
   "messaging": "Sõnumite saatmine",
   "sender_id_info": "SMS-i saatjana kuvatud nimi või number (mõned riigid ei luba tähtnumbrilisi saatja ID-sid)",
   "org_admins_can_create_new_teams": "Uusi meeskondi saab luua ainult teie organisatsiooni administraator",
-  "google_new_spam_policy": "Google'i uus rämpsposti poliitika võib takistada teil selle broneeringu kohta e-kirju ja kalendriteavitusi saamast.",
   "resolve": "Lahenda",
   "no_organization_slug": "Selle organisatsiooni jaoks meeskondade loomisel ilmnes viga. Puuduv URL-i slug.",
   "copy_link_org": "Kopeeri link organisatsioonile",

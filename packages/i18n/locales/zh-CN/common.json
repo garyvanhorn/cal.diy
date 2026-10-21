@@ -2741,7 +2741,6 @@
   "messaging": "消息",
   "sender_id_info": "显示为短信发件人的姓名或号码（某些国家/地区不允许使用字母数字发件人 ID）",
   "org_admins_can_create_new_teams": "只有您组织的管理员可以创建新团队",
-  "google_new_spam_policy": "Google 的新垃圾邮件政策可能会阻止您接收有关此预订的任何电子邮件和日历通知。",
   "resolve": "解决",
   "no_organization_slug": "为该组织创建团队时出错。缺少链接 slug。",
   "copy_link_org": "复制组织链接",

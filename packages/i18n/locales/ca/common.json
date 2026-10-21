@@ -2806,7 +2806,6 @@
   "messaging": "Missatgeria",
   "sender_id_info": "Nom o número que es mostra com a remitent d'un SMS (alguns països no permeten IDs alfanumèrics)",
   "org_admins_can_create_new_teams": "Només l'administrador de la vostra organització pot crear nous equips",
-  "google_new_spam_policy": "La nova política de spam de Google podria impedir que rebis correus electrònics i notificacions de calendari sobre aquesta reserva.",
   "resolve": "Resoldre",
   "no_organization_slug": "Hi ha hagut un error en crear els equips per a aquesta organització. Falta l'slug de l'URL.",
   "copy_link_org": "Copiar l'enllaç de l'organització",

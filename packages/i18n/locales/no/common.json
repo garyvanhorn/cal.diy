@@ -2806,7 +2806,6 @@
   "messaging": "Meldinger",
   "sender_id_info": "Navn eller nummer som vises som avsender av en SMS (noen land tillater ikke alfanumeriske avsender-IDer)",
   "org_admins_can_create_new_teams": "Kun administratoren i din organisasjon kan opprette nye lag",
-  "google_new_spam_policy": "Googles nye spam-policy kan hindre deg i å motta e-post og kalendervarslinger om denne bookingen.",
   "resolve": "Løs",
   "no_organization_slug": "Det oppstod en feil ved oppretting av lag for denne organisasjonen. Mangler URL-slug.",
   "copy_link_org": "Kopier lenke til organisasjon",

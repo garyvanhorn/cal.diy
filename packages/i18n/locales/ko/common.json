@@ -2790,7 +2790,6 @@
   "messaging": "메시징",
   "sender_id_info": "SMS 발신자로 표시되는 이름 또는 번호(일부 국가에서는 영숫자 발신자 ID를 허용하지 않음)",
   "org_admins_can_create_new_teams": "조직의 관리자만 새 팀을 만들 수 있습니다",
-  "google_new_spam_policy": "Google의 새로운 스팸 정책으로 인해 이 예약에 대한 이메일 및 캘린더 알림을 받지 못할 수 있습니다.",
   "resolve": "해결",
   "no_organization_slug": "이 조직의 팀을 만드는 중 오류가 발생했습니다. URL 슬러그가 없습니다.",
   "copy_link_org": "조직 링크 복사",

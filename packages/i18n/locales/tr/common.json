@@ -2741,7 +2741,6 @@
   "messaging": "Mesajlaşma",
   "sender_id_info": "SMS'i gönderen alanında gösterilen ad veya numara (bazı ülkeler alfasayısal gönderen kimliklerine izin vermez)",
   "org_admins_can_create_new_teams": "Yalnızca kuruluşunuzun yöneticisi yeni ekipler oluşturabilir",
-  "google_new_spam_policy": "Google'ın yeni spam politikası, bu rezervasyonla ilgili herhangi bir e-posta ve takvim bildirimi almanızı engelleyebilir.",
   "resolve": "Çöz",
   "no_organization_slug": "Bu kuruluş için ekipler oluşturulurken bir hata oluştu. URL bilgisi eksik.",
   "copy_link_org": "Bağlantıyı kuruluşa kopyala",
