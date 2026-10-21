@@ -6,7 +6,8 @@ import { PrismaBookingPaymentRepository } from "./PrismaBookingPaymentRepository
 describe("PrismaBookingPaymentRepository", () => {
   const findUnique = vi.fn();
   const findFirst = vi.fn();
-  const mockPrisma = { payment: { findUnique, findFirst } } as unknown as PrismaClient;
+  const update = vi.fn();
+  const mockPrisma = { payment: { findUnique, findFirst, update } } as unknown as PrismaClient;
   let repository: PrismaBookingPaymentRepository;
 
   beforeEach(() => {
@@ -48,6 +49,22 @@ describe("PrismaBookingPaymentRepository", () => {
       expect(findFirst).toHaveBeenCalledWith({
         where: { externalId: "pi_1" },
         select: { id: true, bookingId: true, success: true, data: true },
+      });
+    });
+  });
+
+  describe("updateDataAndBooking", () => {
+    it("updates the payment data and its booking in one write", async () => {
+      await repository.updateDataAndBooking({
+        paymentId: 5,
+        data: { setupIntent: { id: "seti_1" } },
+        booking: { paid: true },
+      });
+
+      expect(update).toHaveBeenCalledWith({
+        where: { id: 5 },
+        data: { data: { setupIntent: { id: "seti_1" } }, booking: { update: { paid: true } } },
+        select: { id: true },
       });
     });
   });

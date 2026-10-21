@@ -1,6 +1,7 @@
 import process from "node:process";
 import { handlePaymentSuccess } from "@calcom/app-store/_utils/payments/handlePaymentSuccess";
 import stripe from "@calcom/app-store/stripepayment/lib/server";
+import { handleSetupIntentSuccess } from "@calcom/features/bookings/lib/payment/handleSetupIntentSuccess";
 import type { IBookingPaymentRepository } from "@calcom/features/bookings/repositories/BookingPaymentRepository.interface";
 import { PrismaBookingPaymentRepository } from "@calcom/features/bookings/repositories/PrismaBookingPaymentRepository";
 import { HttpError as HttpCode } from "@calcom/lib/http-error";
@@ -37,8 +38,17 @@ const handlePaymentIntentSucceeded: StripeEventHandler = async (event, paymentRe
   return `Payment ${payment.id} succeeded`;
 };
 
+const handleSetupIntentSucceeded: StripeEventHandler = async (event, paymentRepository) => {
+  const setupIntent = event.data.object as Stripe.SetupIntent;
+  const traceContext = distributedTracing.createTrace("stripe_setup_intent_webhook", {
+    meta: { setupIntentId: setupIntent.id },
+  });
+  return handleSetupIntentSuccess({ setupIntent, paymentRepository, traceContext });
+};
+
 const eventHandlers: Record<string, StripeEventHandler | undefined> = {
   "payment_intent.succeeded": handlePaymentIntentSucceeded,
+  "setup_intent.succeeded": handleSetupIntentSucceeded,
 };
 
 export async function stripeWebhookHandler(req: NextApiRequest, res: NextApiResponse) {

@@ -63,4 +63,10 @@ export interface IBookingPaymentRepository {
   findByUidIncludeBookingAndEventType(uid: string): Promise<PaymentWithBookingAndEventType | null>;
 
   findByExternalId(externalId: string): Promise<PaymentByExternalId | null>;
+
+  updateDataAndBooking(args: {
+    paymentId: number;
+    data: Prisma.InputJsonValue;
+    booking: Prisma.BookingUpdateInput;
+  }): Promise<void>;
 }
