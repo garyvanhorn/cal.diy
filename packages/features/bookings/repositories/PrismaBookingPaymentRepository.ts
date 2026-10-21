@@ -5,6 +5,7 @@ import type {
   BookingPaymentWithCredentials,
   CreatePaymentData,
   IBookingPaymentRepository,
+  PaymentByExternalId,
   PaymentForAwaitingEmail,
   PaymentWithBookingAndEventType,
 } from "./BookingPaymentRepository.interface";
@@ -71,6 +72,13 @@ export class PrismaBookingPaymentRepository implements IBookingPaymentRepository
     return await this.prismaClient.payment.findUnique({
       where: { uid },
       select: paymentPageSelect,
+    });
+  }
+
+  async findByExternalId(externalId: string): Promise<PaymentByExternalId | null> {
+    return await this.prismaClient.payment.findFirst({
+      where: { externalId },
+      select: { id: true, bookingId: true, success: true, data: true },
     });
   }
 }

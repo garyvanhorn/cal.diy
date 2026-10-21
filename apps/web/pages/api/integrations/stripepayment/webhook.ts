@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { stripeWebhookHandler } from "@lib/payment/stripe/stripeWebhookHandler";
 
 export const config = {
   api: {
@@ -6,6 +6,4 @@ export const config = {
   },
 };
 
-export default function handler(_req: NextApiRequest, res: NextApiResponse) {
-  res.status(404).json({ message: "Payment webhooks are not available in community edition" });
-}
+export default stripeWebhookHandler;
