@@ -4,6 +4,7 @@ import { shouldHideBrandingForEvent } from "@calcom/features/profile/lib/hideBra
 import prisma from "@calcom/prisma";
 import { BookingStatus } from "@calcom/prisma/enums";
 import { EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
+import type { JsonValue } from "@calcom/types/Json";
 import type { inferSSRProps } from "@lib/types/inferSSRProps";
 import type { GetServerSidePropsContext } from "next";
 import { z } from "zod";
@@ -12,7 +13,8 @@ const querySchema = z.object({
   uid: z.string(),
 });
 
-const responsesSchema = z.record(z.unknown()).catch({});
+// Values come from a Prisma Json column, so they are already valid JSON
+const responsesSchema = z.record(z.custom<JsonValue>()).catch({});
 
 function hasStringProp<T extends string>(x: unknown, key: T): x is { [key in T]: string } {
   return !!x && typeof x === "object" && key in x;

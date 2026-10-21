@@ -54,10 +54,14 @@ export function getNewSearchParams(args: {
   return newSearchParams;
 }
 
+// Only name, email and timeZone of attendees are read, so callers outside the booking flow
+// (e.g. the payment page) can pass attendees without the full Attendee row
 type SuccessRedirectBookingType = Pick<
   BookingResponse,
-  "uid" | "title" | "description" | "startTime" | "endTime" | "location" | "attendees" | "user" | "responses"
->;
+  "uid" | "title" | "description" | "startTime" | "endTime" | "location" | "user" | "responses"
+> & {
+  attendees?: Array<{ name: string; email: string; timeZone: string }>;
+};
 
 type BookingResponseKey = keyof SuccessRedirectBookingType;
 
