@@ -5,7 +5,8 @@ import { PrismaBookingPaymentRepository } from "./PrismaBookingPaymentRepository
 
 describe("PrismaBookingPaymentRepository", () => {
   const findUnique = vi.fn();
-  const mockPrisma = { payment: { findUnique } } as unknown as PrismaClient;
+  const findFirst = vi.fn();
+  const mockPrisma = { payment: { findUnique, findFirst } } as unknown as PrismaClient;
   let repository: PrismaBookingPaymentRepository;
 
   beforeEach(() => {
@@ -35,6 +36,19 @@ describe("PrismaBookingPaymentRepository", () => {
 
     it("never selects credentials", () => {
       expect(JSON.stringify(paymentPageSelect)).not.toContain("credential");
+    });
+  });
+
+  describe("findByExternalId", () => {
+    it("selects only the fields the Stripe webhook needs", async () => {
+      const payment = { id: 5, bookingId: 9, success: false, data: {} };
+      findFirst.mockResolvedValue(payment);
+
+      await expect(repository.findByExternalId("pi_1")).resolves.toBe(payment);
+      expect(findFirst).toHaveBeenCalledWith({
+        where: { externalId: "pi_1" },
+        select: { id: true, bookingId: true, success: true, data: true },
+      });
     });
   });
 });

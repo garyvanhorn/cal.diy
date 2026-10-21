@@ -41,6 +41,13 @@ export interface PaymentForAwaitingEmail {
   } | null;
 }
 
+export interface PaymentByExternalId {
+  id: number;
+  bookingId: number;
+  success: boolean;
+  data: Prisma.JsonValue;
+}
+
 export type PaymentWithBookingAndEventType = Prisma.PaymentGetPayload<{ select: typeof paymentPageSelect }>;
 
 export interface IBookingPaymentRepository {
@@ -54,4 +61,6 @@ export interface IBookingPaymentRepository {
   findByIdForAwaitingPaymentEmail(id: number): Promise<PaymentForAwaitingEmail | null>;
 
   findByUidIncludeBookingAndEventType(uid: string): Promise<PaymentWithBookingAndEventType | null>;
+
+  findByExternalId(externalId: string): Promise<PaymentByExternalId | null>;
 }
