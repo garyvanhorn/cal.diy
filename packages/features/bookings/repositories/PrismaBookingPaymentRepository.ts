@@ -1,5 +1,6 @@
 import type { PrismaClient } from "@calcom/prisma";
 import prisma from "@calcom/prisma";
+import type { Prisma } from "@calcom/prisma/client";
 import { paymentPageSelect } from "@calcom/prisma/selects/payment";
 import type {
   BookingPaymentWithCredentials,
@@ -79,6 +80,22 @@ export class PrismaBookingPaymentRepository implements IBookingPaymentRepository
     return await this.prismaClient.payment.findFirst({
       where: { externalId },
       select: { id: true, bookingId: true, success: true, data: true },
+    });
+  }
+
+  async updateDataAndBooking({
+    paymentId,
+    data,
+    booking,
+  }: {
+    paymentId: number;
+    data: Prisma.InputJsonValue;
+    booking: Prisma.BookingUpdateInput;
+  }): Promise<void> {
+    await this.prismaClient.payment.update({
+      where: { id: paymentId },
+      data: { data, booking: { update: booking } },
+      select: { id: true },
     });
   }
 }

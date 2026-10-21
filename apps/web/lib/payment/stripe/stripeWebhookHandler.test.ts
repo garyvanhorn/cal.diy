@@ -6,6 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({
   findByExternalId: vi.fn(),
   handlePaymentSuccess: vi.fn(),
+  handleSetupIntentSuccess: vi.fn(),
 }));
 
 vi.mock("@calcom/prisma", () => ({ default: {} }));
@@ -19,6 +20,9 @@ vi.mock("@calcom/features/bookings/repositories/PrismaBookingPaymentRepository",
 }));
 vi.mock("@calcom/app-store/_utils/payments/handlePaymentSuccess", () => ({
   handlePaymentSuccess: mocks.handlePaymentSuccess,
+}));
+vi.mock("@calcom/features/bookings/lib/payment/handleSetupIntentSuccess", () => ({
+  handleSetupIntentSuccess: mocks.handleSetupIntentSuccess,
 }));
 
 import { stripeWebhookHandler } from "./stripeWebhookHandler";
@@ -135,6 +139,20 @@ describe("stripeWebhookHandler", () => {
       expect.objectContaining({ paymentId: 5, bookingId: 9, appSlug: "stripe" })
     );
     expect(result).toEqual({ status: 200, body: { message: "Booking with id '9' was paid and confirmed." } });
+  });
+
+  it("confirms the booking when a no-show fee SetupIntent succeeds", async () => {
+    mocks.handleSetupIntentSuccess.mockResolvedValue("Card saved and booking 9 confirmed");
+
+    const result = await send(buildRequest({ body: buildEvent("setup_intent.succeeded", "seti_1") }));
+
+    expect(mocks.handleSetupIntentSuccess).toHaveBeenCalledWith(
+      expect.objectContaining({ setupIntent: expect.objectContaining({ id: "seti_1" }) })
+    );
+    expect(result).toEqual({
+      status: 200,
+      body: { received: true, message: "Card saved and booking 9 confirmed" },
+    });
   });
 
   it("returns a 500 so Stripe retries when handling fails", async () => {
