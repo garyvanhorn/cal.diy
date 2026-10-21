@@ -1,11 +1,12 @@
 import type { PrismaClient } from "@calcom/prisma";
 import prisma from "@calcom/prisma";
-
+import { paymentPageSelect } from "@calcom/prisma/selects/payment";
 import type {
-  IBookingPaymentRepository,
   BookingPaymentWithCredentials,
   CreatePaymentData,
+  IBookingPaymentRepository,
   PaymentForAwaitingEmail,
+  PaymentWithBookingAndEventType,
 } from "./BookingPaymentRepository.interface";
 
 export class PrismaBookingPaymentRepository implements IBookingPaymentRepository {
@@ -63,6 +64,13 @@ export class PrismaBookingPaymentRepository implements IBookingPaymentRepository
           },
         },
       },
+    });
+  }
+
+  async findByUidIncludeBookingAndEventType(uid: string): Promise<PaymentWithBookingAndEventType | null> {
+    return await this.prismaClient.payment.findUnique({
+      where: { uid },
+      select: paymentPageSelect,
     });
   }
 }

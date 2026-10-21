@@ -1,4 +1,5 @@
 import type { Payment, PaymentOption, Prisma } from "@calcom/prisma/client";
+import type { paymentPageSelect } from "@calcom/prisma/selects/payment";
 import type { JsonValue } from "@calcom/types/Json";
 
 export interface BookingPaymentWithCredentials {
@@ -40,6 +41,8 @@ export interface PaymentForAwaitingEmail {
   } | null;
 }
 
+export type PaymentWithBookingAndEventType = Prisma.PaymentGetPayload<{ select: typeof paymentPageSelect }>;
+
 export interface IBookingPaymentRepository {
   findByExternalIdIncludeBookingUserCredentials(
     externalId: string,
@@ -49,4 +52,6 @@ export interface IBookingPaymentRepository {
   createPaymentRecord(data: CreatePaymentData): Promise<Payment>;
 
   findByIdForAwaitingPaymentEmail(id: number): Promise<PaymentForAwaitingEmail | null>;
+
+  findByUidIncludeBookingAndEventType(uid: string): Promise<PaymentWithBookingAndEventType | null>;
 }

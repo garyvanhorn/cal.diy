@@ -12,20 +12,11 @@ import useTheme from "@calcom/lib/hooks/useTheme";
 import { getIs24hClockFromLocalStorage, isBrowserLocale24h } from "@calcom/lib/timeFormat";
 import { CURRENT_TIMEZONE } from "@calcom/lib/timezoneConstants";
 import { localStorage } from "@calcom/lib/webstorage";
+import type { PaymentPageProps } from "@lib/payment/[uid]/getServerSideProps";
 import classNames from "classnames";
 import dynamic from "next/dynamic";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
-
-
-type PaymentPageProps = {
-  payment: { id: number; success: boolean; refunded: boolean; amount: number; currency: string; paymentOption: string | null; data: Record<string, unknown>; appId?: string | null };
-  clientSecret?: string | null;
-  booking: { id: number; uid: string; title: string; startTime: string; endTime: string; status: string; paid: boolean; description?: string | null; location?: string | null };
-  eventType: { id: number; title: string; length: number; price: number; currency: string; metadata: Record<string, unknown> | null; successRedirectUrl?: string | null; forwardParamsSuccessRedirect?: boolean | null; recurringEvent?: unknown };
-  profile: { theme?: string | null; hideBranding?: boolean };
-  user?: { name?: string | null; username?: string | null } | null;
-};
 
 const PaypalPaymentComponent = dynamic(
   () =>
