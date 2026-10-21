@@ -18,6 +18,16 @@ import dynamic from "next/dynamic";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 
+const StripePaymentComponent = dynamic(
+  () =>
+    import("@calcom/web/components/apps/stripepayment/StripePaymentComponent").then(
+      (m) => m.StripePaymentComponent
+    ),
+  {
+    ssr: false,
+  }
+);
+
 const PaypalPaymentComponent = dynamic(
   () =>
     import("@calcom/web/components/apps/paypal/PaypalPaymentComponent").then((m) => m.PaypalPaymentComponent),
@@ -148,7 +158,13 @@ const PaymentPage: FC<PaymentPageProps> = (props) => {
                     <div className="mt-4 text-center text-default dark:text-gray-300">{t("paid")}</div>
                   )}
                   {props.payment.appId === "stripe" && !props.payment.success && (
-                    <div>{/* StripePaymentComponent removed */}</div>
+                    <StripePaymentComponent
+                      payment={props.payment}
+                      eventType={props.eventType}
+                      booking={props.booking}
+                      clientSecret={props.clientSecret}
+                      username={props.user.username}
+                    />
                   )}
                   {props.payment.appId === "paypal" && !props.payment.success && (
                     <PaypalPaymentComponent payment={props.payment} />
