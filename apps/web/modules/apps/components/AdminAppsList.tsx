@@ -248,7 +248,9 @@ const EditKeysModal: FC<{
                     name={key}
                     value={value}
                     onChange={(e) => {
-                      formMethods.setValue(key, e?.target.value);
+                      // Keys are pasted from provider dashboards and often carry a stray space, which
+                      // fails prefix checks such as Stripe's "ca_" without an obvious cause.
+                      formMethods.setValue(key, e?.target.value.trim());
                     }}
                   />
                 )}
