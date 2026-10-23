@@ -1,7 +1,7 @@
 "use client";
 
 import AppCategoryNavigation from "@calcom/app-store/_components/AppCategoryNavigation";
-import { appKeysSchemas } from "@calcom/app-store/apps.keys-schemas.generated";
+import { getAppKeysSchema } from "@calcom/app-store/_utils/getAppKeysSchema";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
 import { APP_NAME } from "@calcom/lib/constants";
@@ -201,7 +201,7 @@ const EditKeysModal: FC<{
   const utils = trpc.useUtils();
   const { t } = useLocale();
   const { dirName, slug, type, isOpen, keys, handleModelClose, fromEnabled, appName } = props;
-  const appKeySchema = appKeysSchemas[dirName as keyof typeof appKeysSchemas];
+  const appKeySchema = getAppKeysSchema(dirName);
 
   const formMethods = useForm({
     resolver: zodResolver(appKeySchema),

@@ -1,4 +1,4 @@
-import { appKeysSchemas } from "@calcom/app-store/apps.keys-schemas.generated";
+import { getAppKeysSchema } from "@calcom/app-store/_utils/getAppKeysSchema";
 import { getLocalAppMetadata } from "@calcom/app-store/utils";
 import type { PrismaClient } from "@calcom/prisma";
 import type { Prisma } from "@calcom/prisma/client";
@@ -60,7 +60,7 @@ export const listLocalHandler = async ({ ctx, input }: ListLocalOptions) => {
       };
     }
 
-    const keysSchema = appKeysSchemas[app.dirName as keyof typeof appKeysSchemas];
+    const keysSchema = getAppKeysSchema(app.dirName ?? app.slug);
 
     const keys: Record<string, string> = {};
 
