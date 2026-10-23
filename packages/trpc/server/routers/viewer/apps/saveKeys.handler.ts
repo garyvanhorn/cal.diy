@@ -1,4 +1,4 @@
-import { appKeysSchemas } from "@calcom/app-store/apps.keys-schemas.generated";
+import { getAppKeysSchema } from "@calcom/app-store/_utils/getAppKeysSchema";
 import { getLocalAppMetadata } from "@calcom/app-store/utils";
 import type { PrismaClient } from "@calcom/prisma";
 import type { Prisma } from "@calcom/prisma/client";
@@ -19,7 +19,7 @@ type SaveKeysOptions = {
 };
 
 export const saveKeysHandler = async ({ ctx, input }: SaveKeysOptions) => {
-  const keysSchema = appKeysSchemas[input.dirName as keyof typeof appKeysSchemas];
+  const keysSchema = getAppKeysSchema(input.dirName);
   const keys = keysSchema.parse(input.keys);
 
   // Get app name from metadata

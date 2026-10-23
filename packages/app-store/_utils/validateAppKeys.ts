@@ -1,4 +1,4 @@
-import { appKeysSchemas } from "@calcom/app-store/apps.keys-schemas.generated";
+import { getAppKeysSchema } from "@calcom/app-store/_utils/getAppKeysSchema";
 import type { Prisma } from "@calcom/prisma/client";
 /**
  * Determines if an app should be enabled based on whether it has valid keys.
@@ -8,7 +8,7 @@ import type { Prisma } from "@calcom/prisma/client";
  * @param keys - The keys object (can be undefined/null)
  */
 export function shouldEnableApp(dirName: string, keys?: Prisma.JsonValue | null): boolean {
-  const keySchema = appKeysSchemas[dirName as keyof typeof appKeysSchemas];
+  const keySchema = getAppKeysSchema(dirName);
   
   // If no schema, the app doesn't require keys - can be enabled
   if (!keySchema) {
