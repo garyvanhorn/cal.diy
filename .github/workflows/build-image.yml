@@ -6,7 +6,7 @@ name: Build image
 
 on:
   push:
-    branches: [main]
+    branches: [main, ci/build-image-ghcr]
     # `paths-ignore` can't re-include a file, so use `paths` with negations.
     # Later patterns win, which is how this workflow file is added back.
     paths:
