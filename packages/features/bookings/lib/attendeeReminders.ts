@@ -13,7 +13,9 @@ export function getAttendeeReminderOffsets(metadata: EventTypeMetadata | undefin
   if (settings?.enabled === false) return [];
 
   const offsets = settings?.offsetsMinutes ?? DEFAULT_ATTENDEE_REMINDER_OFFSETS_MINUTES;
-  return [...new Set(offsets)].filter((offset) => ATTENDEE_REMINDER_OFFSET_OPTIONS_MINUTES.includes(offset));
+  return Array.from(new Set(offsets)).filter((offset) =>
+    ATTENDEE_REMINDER_OFFSET_OPTIONS_MINUTES.includes(offset)
+  );
 }
 
 /**
