@@ -184,6 +184,12 @@ const _eventTypeMetaDataSchemaWithoutApps = z.object({
     })
     .optional(),
   bookerLayouts: bookerLayouts.optional(),
+  attendeeReminders: z
+    .object({
+      enabled: z.boolean().optional(),
+      offsetsMinutes: z.array(z.number().int().positive()).optional(),
+    })
+    .optional(),
 });
 
 export const eventTypeMetaDataSchemaWithUntypedApps = _eventTypeMetaDataSchemaWithoutApps.merge(
