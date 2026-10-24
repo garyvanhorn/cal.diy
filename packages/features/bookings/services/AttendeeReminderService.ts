@@ -7,7 +7,6 @@ import { safeStringify } from "@calcom/lib/safeStringify";
 import { getTimeFormatStringFromUserTimeFormat } from "@calcom/lib/timeFormat";
 import { bookingMetadataSchema, EventTypeMetaDataSchema } from "@calcom/prisma/zod-utils";
 import type { CalendarEvent } from "@calcom/types/Calendar";
-
 import {
   getAttendeeReminderOffsets,
   getDueAttendeeReminderOffsets,
@@ -35,12 +34,13 @@ export class AttendeeReminderService {
     let afterId: number | undefined;
 
     while (true) {
-      const bookings = await this.deps.attendeeReminderRepository.findUpcomingAcceptedBookingsIncludeAttendees({
-        startAfter: now,
-        startBefore,
-        afterId,
-        take: PAGE_SIZE,
-      });
+      const bookings =
+        await this.deps.attendeeReminderRepository.findUpcomingAcceptedBookingsIncludeAttendees({
+          startAfter: now,
+          startBefore,
+          afterId,
+          take: PAGE_SIZE,
+        });
       if (!bookings.length) break;
 
       const sent = await this.deps.attendeeReminderRepository.findSentByBookingIds(
@@ -91,9 +91,18 @@ export class AttendeeReminderService {
     });
     if (!dueOffsets.length) return false;
 
+    const calEvent = await this.buildCalendarEvent(booking);
+    if (!calEvent) return false;
+
+    // Record before sending so a reminder goes out at most once: a missed reminder is
+    // better than emailing an attendee every 5 minutes if the write keeps failing.
+    // Recording every due offset means a late cron run sends one reminder, not 24 h and 1 h back to back.
+    await this.deps.attendeeReminderRepository.createSent({
+      bookingId: booking.id,
+      offsetsMinutes: dueOffsets,
+    });
+
     try {
-      const calEvent = await this.buildCalendarEvent(booking);
-      if (!calEvent) return false;
       await Promise.all(
         calEvent.attendees.map((attendee, index) =>
           sendAttendeeReminderEmail(
@@ -109,17 +118,12 @@ export class AttendeeReminderService {
       log.error(`Failed to send attendee reminder for booking ${booking.id}`, safeStringify(error));
       return false;
     }
-
-    // Recording every due offset (not just one email's worth) means a late cron run sends
-    // a single reminder instead of a 24 h and a 1 h reminder back to back.
-    await this.deps.attendeeReminderRepository.createSent({
-      bookingId: booking.id,
-      offsetsMinutes: dueOffsets,
-    });
     return true;
   }
 
-  private async buildCalendarEvent(booking: UpcomingBookingForAttendeeReminder): Promise<CalendarEvent | null> {
+  private async buildCalendarEvent(
+    booking: UpcomingBookingForAttendeeReminder
+  ): Promise<CalendarEvent | null> {
     const { user } = booking;
     if (!user) {
       log.warn(`Booking ${booking.id} has no organizer, skipping attendee reminder`);
