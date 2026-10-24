@@ -141,28 +141,33 @@ export const createColorMap = (brandColor: string) => {
   return response;
 };
 
-function getWCAGContrastColor(background: string): string {
-  // Convert the hex background color to RGB
-  const { r, g, b } = hexToRgb(background);
-  // Calculate the luminance of the background color
-  const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+// WCAG 2.x relative luminance; a plain weighted RGB average misjudges mid-tone colours.
+function relativeLuminance(hex: string): number {
+  const { r, g, b } = hexToRgb(hex);
+  const channel = (value: number) => {
+    const c = value / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
+}
 
-  // If the luminance is less than 0.5, use white as the text color, otherwise use black
-  return luminance < 0.5 ? "#FFFFFF" : "#000000";
+export function getContrastRatio(colorA: string, colorB: string): number {
+  const a = relativeLuminance(colorA);
+  const b = relativeLuminance(colorB);
+  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+}
+
+/** Picks whichever of white or black reads better on the background. */
+export function getWCAGContrastColor(background: string): string {
+  return getContrastRatio(background, "#FFFFFF") >= getContrastRatio(background, "#000000")
+    ? "#FFFFFF"
+    : "#000000";
 }
 
 export function checkWCAGContrastColor(background: string, target: string) {
-  const backgroundRGB = hexToRgb(background);
-  const targetRGB = hexToRgb(target);
-  const bgLuminance = (0.2126 * backgroundRGB.r + 0.7152 * backgroundRGB.g + 0.0722 * backgroundRGB.b) / 255;
-  const targetLuminance = (0.2126 * targetRGB.r + 0.7152 * targetRGB.g + 0.0722 * targetRGB.b) / 255;
-
-  const contrastRadio =
-    (Math.max(bgLuminance, targetLuminance) + 0.05) / (Math.min(targetLuminance, bgLuminance) + 0.05);
-
   const MIN_CONTRAST_RATIO = 4.5; // used for BGs
 
-  return contrastRadio >= MIN_CONTRAST_RATIO;
+  return getContrastRatio(background, target) >= MIN_CONTRAST_RATIO;
 }
 
 /**
