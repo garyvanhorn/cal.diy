@@ -17,7 +17,8 @@ vi.mock("@calcom/app-store/_utils/getCalendar", () => ({
   getCalendar: vi.fn(),
 }));
 
-vi.mock("@calcom/lib/constants", () => ({
+vi.mock("@calcom/lib/constants", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@calcom/lib/constants")>()),
   ORGANIZER_EMAIL_EXEMPT_DOMAINS: "",
   IS_PRODUCTION: false,
 }));
