@@ -3,9 +3,7 @@ import { BookingRepository } from "@calcom/features/bookings/repositories/Bookin
 import { ErrorCode } from "@calcom/lib/errorCodes";
 import { ErrorWithCode } from "@calcom/lib/errors";
 import type { PrismaClient } from "@calcom/prisma";
-
 import { TRPCError } from "@trpc/server";
-
 import type { TrpcSessionUser } from "../../../types";
 import type { TChargeCardInputSchema } from "./chargeCard.schema";
 
@@ -23,6 +21,22 @@ export const chargeCardHandler = async ({ ctx, input }: ChargeCardHandlerOptions
     throw new TRPCError({
       code: "NOT_FOUND",
       message: "Booking not found",
+    });
+  }
+
+  // The router used to be unregistered, so this handler never had an owner check. Only the
+  // organizer may charge the card an attendee left on file.
+  if (booking.userId !== ctx.user.id) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "You can only charge no-show fees on your own bookings",
+    });
+  }
+
+  if (!booking.payment[0]) {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: `Booking ${booking.id} has no card on file to charge`,
     });
   }
 
