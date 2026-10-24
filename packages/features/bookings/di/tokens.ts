@@ -19,4 +19,8 @@ export const BOOKING_DI_TOKENS = {
   BOOKING_ATTENDEES_SERVICE_MODULE: Symbol("BookingAttendeesServiceModule"),
   BOOKING_ATTENDEES_REMOVE_SERVICE: Symbol("BookingAttendeesRemoveService"),
   BOOKING_ATTENDEES_REMOVE_SERVICE_MODULE: Symbol("BookingAttendeesRemoveServiceModule"),
+  ATTENDEE_REMINDER_REPOSITORY: Symbol("AttendeeReminderRepository"),
+  ATTENDEE_REMINDER_REPOSITORY_MODULE: Symbol("AttendeeReminderRepositoryModule"),
+  ATTENDEE_REMINDER_SERVICE: Symbol("AttendeeReminderService"),
+  ATTENDEE_REMINDER_SERVICE_MODULE: Symbol("AttendeeReminderServiceModule"),
 };
