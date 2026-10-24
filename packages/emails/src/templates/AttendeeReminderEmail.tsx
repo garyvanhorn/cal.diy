@@ -9,7 +9,7 @@ export const AttendeeReminderEmail = (props: { calEvent: CalendarEvent; attendee
       {...props}
       headerType="calendarCircle"
       title="attendee_reminder_email_title"
-      subtitle={<>{t("attendee_reminder_email_subtitle")}</>}
+      subtitle={t("attendee_reminder_email_subtitle")}
     />
   );
 };
