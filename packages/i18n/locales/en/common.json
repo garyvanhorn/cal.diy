@@ -2700,6 +2700,7 @@
   "on_booking_option": "Collect payment on booking",
   "hold_option": "Charge no-show fee",
   "card_held": "Card held",
+  "charge_successful": "Charge successful",
   "charge_card": "Charge card",
   "card_charged": "Card charged",
   "no_show_fee_amount": "{{amount, currency}} no-show fee",

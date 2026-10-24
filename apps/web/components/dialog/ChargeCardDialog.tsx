@@ -1,13 +1,12 @@
-import type { Dispatch, SetStateAction } from "react";
-import { useState } from "react";
-
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { trpc } from "@calcom/trpc/react";
 import { Button } from "@calcom/ui/components/button";
-import { DialogContent, DialogFooter, DialogHeader, DialogClose } from "@calcom/ui/components/dialog";
+import { DialogClose, DialogContent, DialogFooter, DialogHeader } from "@calcom/ui/components/dialog";
 import { showToast } from "@calcom/ui/components/toast";
 import { CreditCardIcon, TriangleAlertIcon } from "@coss/ui/icons";
+import type { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 
 interface IRescheduleDialog {
   isOpenDialog: boolean;
@@ -23,15 +22,17 @@ export const ChargeCardDialog = (props: IRescheduleDialog) => {
   const { isOpenDialog, setIsOpenDialog, bookingId } = props;
   const [chargeError, setChargeError] = useState<string | null>(null);
 
-  const chargeCardMutation = {
-    mutate: (_args: { bookingId: number }) => {
+  const chargeCardMutation = trpc.viewer.payments.chargeCard.useMutation({
+    onSuccess: () => {
       utils.viewer.bookings.invalidate();
       setIsOpenDialog(false);
       setChargeError(null);
-      showToast("Charge successful", "success");
+      showToast(t("charge_successful"), "success");
     },
-    isPending: false,
-  };
+    onError: (error) => {
+      setChargeError(error.message);
+    },
+  });
 
   const currencyStringParams = {
     amount: props.paymentAmount / 100.0,
