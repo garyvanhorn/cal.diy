@@ -19,6 +19,10 @@ jobs:
   every-5-minutes:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.schedule == '*/5 * * * *' }}
     runs-on: ubuntu-latest
+    # A delayed run can overlap the next one; two at once could email the same reminder twice.
+    concurrency:
+      group: cronslot-every-5-minutes
+      cancel-in-progress: false
     env:
       CRON_KEY: ${{ secrets.CRONSLOT_CRON_KEY }}
     steps:
@@ -38,6 +42,10 @@ jobs:
         if: ${{ env.CRON_KEY && !cancelled() }}
         run: |
           curl "$APP_URL/api/cron/bookingReminder" -X POST -H "authorization: $CRON_KEY" -sSf --max-time 120
+      - name: Email attendees about upcoming bookings
+        if: ${{ env.CRON_KEY && !cancelled() }}
+        run: |
+          curl "$APP_URL/api/cron/attendee-reminders" -H "authorization: Bearer $CRON_KEY" -sSf --max-time 120
 
   daily:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.schedule == '0 3 * * *' }}
