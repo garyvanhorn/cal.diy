@@ -9,6 +9,8 @@ permissions:
   pull-requests: write
 jobs:
   cleanup-report:
+    # Needs Cal.com's CI GitHub App and its calcom/test-results-2 repo, which forks don't have.
+    if: github.repository == 'calcom/cal.diy'
     runs-on: ubuntu-latest
     steps:
       - name: Generate GitHub App token
