@@ -1,0 +1,55 @@
+name: Cron - CronSlot background jobs
+
+# CronSlot runs on Railway, so the Vercel crons in apps/web/vercel.json never fire.
+# This replaces the ones that exist in this fork. It uses its own secret name so the
+# upstream cron-*.yml workflows stay skipped: most call endpoints cal.diy removed.
+# Railway sets CRON_SECRET to the same value as CRON_API_KEY, so one secret covers both auth styles.
+
+on:
+  schedule:
+    # GitHub's shortest interval; runs can start a few minutes late under load.
+    - cron: "*/5 * * * *"
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+env:
+  APP_URL: https://app.cronslot.com
+
+jobs:
+  every-5-minutes:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.schedule == '*/5 * * * *' }}
+    runs-on: ubuntu-latest
+    env:
+      CRON_KEY: ${{ secrets.CRONSLOT_CRON_KEY }}
+    steps:
+      - name: Process queued tasks
+        if: ${{ env.CRON_KEY }}
+        run: |
+          curl "$APP_URL/api/tasks/cron" -H "authorization: Bearer $CRON_KEY" -sSf --max-time 120
+      - name: Refresh calendar subscriptions
+        if: ${{ env.CRON_KEY && !cancelled() }}
+        run: |
+          curl "$APP_URL/api/cron/calendar-subscriptions" -H "authorization: Bearer $CRON_KEY" -sSf --max-time 120
+      - name: Refresh selected calendars
+        if: ${{ env.CRON_KEY && !cancelled() }}
+        run: |
+          curl "$APP_URL/api/cron/selected-calendars" -H "authorization: Bearer $CRON_KEY" -sSf --max-time 120
+      - name: Remind organizers of bookings awaiting confirmation
+        if: ${{ env.CRON_KEY && !cancelled() }}
+        run: |
+          curl "$APP_URL/api/cron/bookingReminder" -X POST -H "authorization: $CRON_KEY" -sSf --max-time 120
+
+  daily:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.schedule == '0 3 * * *' }}
+    runs-on: ubuntu-latest
+    env:
+      CRON_KEY: ${{ secrets.CRONSLOT_CRON_KEY }}
+    steps:
+      - name: Clean up finished tasks
+        if: ${{ env.CRON_KEY }}
+        run: |
+          curl "$APP_URL/api/tasks/cleanup" -H "authorization: Bearer $CRON_KEY" -sSf --max-time 120
+      - name: Clean up calendar subscriptions
+        if: ${{ env.CRON_KEY && !cancelled() }}
+        run: |
+          curl "$APP_URL/api/cron/calendar-subscriptions-cleanup" -H "authorization: Bearer $CRON_KEY" -sSf --max-time 120
