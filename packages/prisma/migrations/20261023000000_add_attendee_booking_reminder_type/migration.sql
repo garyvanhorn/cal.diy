@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "public"."ReminderType" ADD VALUE 'ATTENDEE_BOOKING_REMINDER';
