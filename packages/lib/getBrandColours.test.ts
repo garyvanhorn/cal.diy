@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { createColorMap } from "./getBrandColours";
+import {
+  checkWCAGContrastColor,
+  createColorMap,
+  getContrastRatio,
+  getWCAGContrastColor,
+} from "./getBrandColours";
 
 describe("useGetBrandingColours", () => {
   it("should return the correct color values for given lightVal and darkVal", () => {
@@ -37,5 +42,28 @@ describe("useGetBrandingColours", () => {
 
     expect(lightMap).toEqual(expectedResult.light);
     expect(darkMap).toEqual(expectedResult.dark);
+  });
+});
+
+describe("getWCAGContrastColor", () => {
+  it("uses black text on mid-tone orange, where white falls below 4.5:1", () => {
+    expect(getContrastRatio("#ff5e1f", "#FFFFFF")).toBeLessThan(4.5);
+    expect(getWCAGContrastColor("#ff5e1f")).toBe("#000000");
+  });
+
+  it("uses white text on dark brand colours", () => {
+    expect(getWCAGContrastColor("#111827")).toBe("#FFFFFF");
+    expect(getWCAGContrastColor("#292929")).toBe("#FFFFFF");
+  });
+
+  it("uses black text on light brand colours", () => {
+    expect(getWCAGContrastColor("#fafafa")).toBe("#000000");
+  });
+});
+
+describe("checkWCAGContrastColor", () => {
+  it("measures contrast with the WCAG formula", () => {
+    expect(checkWCAGContrastColor("#ffffff", "#ff5e1f")).toBe(false);
+    expect(checkWCAGContrastColor("#ffffff", "#000000")).toBe(true);
   });
 });

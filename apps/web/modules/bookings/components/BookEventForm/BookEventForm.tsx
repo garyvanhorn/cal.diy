@@ -187,14 +187,14 @@ export const BookEventForm = ({
               values={{ appName: APP_NAME }}
               components={[
                 <Link
-                  className="text-emphasis hover:underline"
+                  className="text-emphasis underline"
                   key="terms"
                   href={`${WEBSITE_TERMS_URL}`}
                   target="_blank">
                   Terms
                 </Link>,
                 <Link
-                  className="text-emphasis hover:underline"
+                  className="text-emphasis underline"
                   key="privacy"
                   href={`${WEBSITE_PRIVACY_POLICY_URL}`}
                   target="_blank">
@@ -209,7 +209,7 @@ export const BookEventForm = ({
           <div className="my-3 w-full text-xs text-subtle">
             {t("proceeding_agreement")}{" "}
             <Link
-              className="text-emphasis hover:underline"
+              className="text-emphasis underline"
               key="terms"
               href={`${WEBSITE_TERMS_URL}`}
               target="_blank">
@@ -217,7 +217,7 @@ export const BookEventForm = ({
             </Link>{" "}
             {t("and")}{" "}
             <Link
-              className="text-emphasis hover:underline"
+              className="text-emphasis underline"
               key="privacy"
               href={`${WEBSITE_PRIVACY_POLICY_URL}`}
               target="_blank">
