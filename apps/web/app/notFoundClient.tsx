@@ -1,8 +1,9 @@
 "use client";
 
-import { IS_CALCOM, WEBSITE_URL } from "@calcom/lib/constants";
+import { IS_CALCOM, SUPPORT_MAIL_ADDRESS, WEBSITE_URL } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { Icon } from "@calcom/ui/components/icon";
+import { Logo } from "@calcom/ui/components/logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLayoutEffect } from "react";
@@ -53,6 +54,7 @@ export function NotFound({ host }: { host: string }) {
     <div className="min-h-screen bg-default px-4" data-testid="404-page">
       <main className="mx-auto max-w-xl pt-16 pb-6 sm:pt-24">
         <div className="text-center">
+          {!IS_CALCOM && <Logo className="mb-8 block" />}
           <p className="font-semibold text-emphasis text-sm uppercase tracking-wide">{t("error_404")}</p>
           <h1 className="mt-2 font-cal font-extrabold text-4xl text-emphasis sm:text-5xl">
             {isBookingSuccessPage ? "Booking not found" : t("page_doesnt_exist")}
@@ -71,15 +73,8 @@ export function NotFound({ host }: { host: string }) {
               ) : null}
             </a>
           ) : (
-            <span className="mt-2 inline-block text-lg">
-              {t(`404_the_${pageType.toLowerCase()}`)}{" "}
-              {username ? (
-                <>
-                  <strong className="mt-2 inline-block text-green-500 text-lg">{username}</strong>{" "}
-                  {t("is_still_available")}
-                </>
-              ) : null}
-            </span>
+            // Self-hosted instances usually have sign-up closed, so don't advertise the path as a free username.
+            <span className="mt-2 inline-block text-lg">{t("check_spelling_mistakes_or_go_back")}</span>
           )}
         </div>
         <div className="mt-12">
@@ -148,11 +143,18 @@ export function NotFound({ host }: { host: string }) {
               </ul>
             </>
           )}
-          <div className="mt-8">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
             <Link href={WEBSITE_URL} className="font-medium text-base text-emphasis hover:text-subtle">
               {t("or_go_back_home")}
               <span aria-hidden="true"> &rarr;</span>
             </Link>
+            {!IS_CALCOM && (
+              <a
+                href={`mailto:${SUPPORT_MAIL_ADDRESS}`}
+                className="font-medium text-base text-emphasis hover:text-subtle">
+                {t("contact_support")}
+              </a>
+            )}
           </div>
         </div>
       </main>

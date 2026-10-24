@@ -42,6 +42,7 @@ import { BookingActionsStoreProvider } from "../../../components/booking/actions
 import { RejectBookingButton } from "../../../components/booking/RejectBookingButton";
 import type { BookingListingStatus } from "../../../components/booking/types";
 import { usePaymentStatus } from "../hooks/usePaymentStatus";
+import { getPaidBadgeLabelKey } from "../lib/getPaidBadgeLabelKey";
 import { useBookingDetailsSheetStore } from "../store/bookingDetailsSheetStore";
 import type { BookingOutput } from "../types";
 import {
@@ -1030,7 +1031,7 @@ function BookingHeaderBadges({
         <Badge variant="orange">{t("error_collecting_card")}</Badge>
       ) : booking.paid ? (
         <Badge variant="green" data-testid="paid_badge">
-          {payment?.paymentOption === "HOLD" ? t("card_held") : t("paid")}
+          {t(getPaidBadgeLabelKey(payment))}
         </Badge>
       ) : null}
       {recurringInfo && (

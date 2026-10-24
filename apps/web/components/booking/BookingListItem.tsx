@@ -37,6 +37,7 @@ import { Icon } from "@calcom/ui/components/icon";
 import { MeetingTimeInTimezones } from "@calcom/ui/components/popover";
 import { showToast } from "@calcom/ui/components/toast";
 import { Tooltip } from "@calcom/ui/components/tooltip";
+import { getPaidBadgeLabelKey } from "@calcom/web/modules/bookings/lib/getPaidBadgeLabelKey";
 
 import assignmentReasonBadgeTitleMap from "@lib/booking/assignmentReasonBadgeTitleMap";
 
@@ -618,7 +619,7 @@ const BookingItemBadges = ({
         </Badge>
       ) : booking.paid ? (
         <Badge className="ltr:mr-2 rtl:ml-2" variant="green" data-testid="paid_badge">
-          {booking.payment[0].paymentOption === "HOLD" ? t("card_held") : t("paid")}
+          {t(getPaidBadgeLabelKey(booking.payment[0]))}
         </Badge>
       ) : null}
       {recurringDates !== undefined && (

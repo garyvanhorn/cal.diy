@@ -1,7 +1,13 @@
 "use client";
 
 import { ErrorCode } from "@calcom/features/auth/lib/ErrorCode";
-import { APP_NAME, HOSTED_CAL_FEATURES, MARKETING_URL, WEBAPP_URL } from "@calcom/lib/constants";
+import {
+  APP_NAME,
+  HOSTED_CAL_FEATURES,
+  MARKETING_URL,
+  SUPPORT_MAIL_ADDRESS,
+  WEBAPP_URL,
+} from "@calcom/lib/constants";
 import { emailRegex } from "@calcom/lib/emailSchema";
 import { getSafeRedirectUrl } from "@calcom/lib/getSafeRedirectUrl";
 import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
@@ -384,6 +390,16 @@ export default function Login({
             )}
           </div>
         )}
+
+        {/* CronSlot is built on AGPL-licensed Cal.com code, so the hosted app links to its source. */}
+        <div className="mt-4 flex items-center justify-center gap-4 text-center text-xs text-subtle">
+          <a href="https://github.com/garyvanhorn/cal.diy" className="hover:underline" rel="noopener">
+            {t("source_code")}
+          </a>
+          <a href={`mailto:${SUPPORT_MAIL_ADDRESS}`} className="hover:underline">
+            {t("contact_support")}
+          </a>
+        </div>
       </div>
 
       <AddToHomescreen />
