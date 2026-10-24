@@ -4775,5 +4775,12 @@
   "attendee_reminder_email_subject": "Reminder: {{title}} on {{date}}",
   "attendee_reminder_email_title": "Your appointment is coming up",
   "attendee_reminder_email_subtitle": "Here are the details. If you need to change it, use the links below.",
+  "attendee_reminders_title": "Email reminders to attendees",
+  "attendee_reminders_description": "Email each attendee before the booking with its details and links to reschedule or cancel.",
+  "attendee_reminders_send": "Send reminders",
+  "attendee_reminder_minutes_before_one": "{{count}} minute before",
+  "attendee_reminder_minutes_before_other": "{{count}} minutes before",
+  "attendee_reminder_hours_before_one": "{{count}} hour before",
+  "attendee_reminder_hours_before_other": "{{count}} hours before",
   "ADD_NEW_STRINGS_ABOVE_THIS_LINE_TO_PREVENT_MERGE_CONFLICTS": "↑↑↑↑↑↑↑↑↑↑↑↑↑ Add your new strings above here ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑"
 }

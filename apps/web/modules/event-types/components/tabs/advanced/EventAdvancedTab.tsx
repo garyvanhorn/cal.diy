@@ -57,6 +57,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import type { z } from "zod";
+import AttendeeRemindersController from "./AttendeeRemindersController";
 import type { CustomEventTypeModalClassNames } from "./CustomEventTypeModal";
 import CustomEventTypeModal from "./CustomEventTypeModal";
 import type { EmailNotificationToggleCustomClassNames } from "./DisableAllEmailsSetting";
@@ -750,6 +751,8 @@ export const EventAdvancedTab = ({
             onDisableRescheduling={setDisableRescheduling}
             customClassNames={customClassNames?.disableRescheduling}
           />
+
+          <AttendeeRemindersController />
         </>
       )}
 
