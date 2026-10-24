@@ -1,7 +1,7 @@
 name: Build image
 
 # Builds the production Docker image here instead of on Railway, whose ~40 min
-# build deadline the uncached build kept hitting. Railway then deploys the
+# build deadline the same build kept hitting (it takes ~10 min on a GitHub runner). Railway then deploys the
 # prebuilt image from GHCR.
 
 on:
@@ -109,8 +109,9 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: ${{ steps.args.outputs.list }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # No layer cache on purpose. The Dockerfile copies apps/ and packages/
+          # before `yarn install`, so any code change misses the cache, and
+          # exporting it (mode=max) took 17 min on top of a 10 min build.
 
       # Off until Railway's `web` service deploys from this image (repo variable
       # RAILWAY_DEPLOY_FROM_GHCR=true). Before that, --from-source would start
